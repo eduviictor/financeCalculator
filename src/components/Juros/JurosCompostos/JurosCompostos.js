@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, TextInput, Picker, TouchableOpacity } from 'react-native';
 
-export default class JurosSimples extends Component {
+export default class JurosCompostos extends Component {
 
     state = {
         inputCapital: '',
@@ -20,7 +20,7 @@ export default class JurosSimples extends Component {
     }
 
     static navigationOptions = {
-        title: 'Juros Simples',
+        title: 'Juros Compostos',
         headerStyle: {
           backgroundColor: '#1a237e',
         },
@@ -56,8 +56,10 @@ export default class JurosSimples extends Component {
     }
 
     onSubmit = () => {
+        console.log(this.state);
         if(this.state.inputMontante === '' && this.state.inputCapital != '' && this.state.inputTaxa != '' && this.state.inputTempo != ''){
             let taxa, tempo;
+
             if(this.state.escTaxa === 'dia'){
                 taxa = this.state.inputTaxa * 30;
             }else if(this.state.escTaxa === 'ano'){
@@ -74,8 +76,10 @@ export default class JurosSimples extends Component {
                 tempo = this.state.inputTempo;
             }
 
-            let montante = this.state.inputCapital * (1 + (taxa/100) * tempo);
-            alert('Montante: R$' + montante);
+            console.log('t', Math.pow(1.02, tempo));
+            let base = 1 + (taxa/100);
+            let montante = this.state.inputCapital * Math.pow(base, tempo);
+            alert('Montante: R$' + montante.toFixed(3));
 
         }else if(this.state.inputMontante != '' && this.state.inputCapital === '' && this.state.inputTaxa != '' && this.state.inputTempo != ''){
 
@@ -96,9 +100,10 @@ export default class JurosSimples extends Component {
             }else{
                 tempo = this.state.inputTempo;
             }
-            
-            let capital = this.state.inputMontante/(1 + ((taxa/100) * tempo));
-            alert('Capital: R$' + capital);
+            // P = F/(1 + i)^n
+            let base = 1 + (taxa/100);
+            let capital = this.state.inputMontante/Math.pow(base, tempo);
+            alert('Capital: R$' + capital.toFixed(2));
 
         }else if(this.state.inputMontante != '' && this.state.inputCapital != '' && this.state.inputTaxa === '' && this.state.inputTempo != ''){
 
@@ -112,8 +117,10 @@ export default class JurosSimples extends Component {
             }else{
                 tempo = this.state.inputTempo;
             }
-            
-            let taxa = (this.state.inputMontante - this.state.inputCapital)/(this.state.inputCapital * tempo);
+
+            let base = this.state.inputMontante/this.state.inputCapital;
+            let exp = 1/tempo;
+            let taxa = Math.pow(base, exp) - 1;
 
             if(this.state.escTaxa === 'dia'){
                 taxa = taxa * 30;
@@ -135,7 +142,10 @@ export default class JurosSimples extends Component {
                 taxa = this.state.inputTaxa;
             }
 
-            let tempo = (this.state.inputMontante - this.state.inputCapital)/(this.state.inputCapital * (taxa/100));
+            let base1 = this.state.inputMontante/this.state.inputCapital;
+            let base2 = 1 + (taxa/100);
+
+            let tempo = Math.log(base1)/Math.log(base2);
             
             if(this.state.escTempo === 'dia'){
                 tempo = tempo / 30.417;

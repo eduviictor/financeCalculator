@@ -45,7 +45,7 @@ export default class Main extends Component {
           <Text style={styles.textButton}>Juros Simples</Text>
         </TouchableOpacity>
         <TouchableOpacity 
-          onPress={() => {this.props.navigation.push('JurosSimples')}}
+          onPress={() => {this.props.navigation.push('JurosCompostos')}}
           style={styles.button}
         >
           <Text style={styles.textButton}>Juros Compostos</Text>
