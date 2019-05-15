@@ -27,7 +27,7 @@ const AppNavigator = createStackNavigator({
   JurosSimples: JurosSimples,
   JurosCompostos: JurosCompostos
 },{
-  initialRouteName: "Home",
+  initialRouteName: "JurosCompostos",
 }
 );
 
