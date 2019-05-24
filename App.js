@@ -9,7 +9,7 @@ import Main from './src/components/Main/Main';
 import JurosSimples from './src/components/Juros/JurosSimples/JurosSimples';
 import JurosCompostos from './src//components/Juros/JurosCompostos/JurosCompostos';
 import DescontoSimples from './src/components/Desconto/DescontoSimples/DescontoSimples';
-
+import DescontoComposto from './src/components/Desconto/DescontoComposto/DescontoComposto';
 
 class App extends Component {
 
@@ -27,9 +27,10 @@ const AppNavigator = createStackNavigator({
   Home: Main,
   JurosSimples: JurosSimples,
   JurosCompostos: JurosCompostos,
-  DescontoSimples: DescontoSimples
+  DescontoSimples: DescontoSimples,
+  DescontoComposto: DescontoComposto
 },{
-  initialRouteName: "DescontoSimples",
+  initialRouteName: "DescontoComposto",
 }
 );
 
