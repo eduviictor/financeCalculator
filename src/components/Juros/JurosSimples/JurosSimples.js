@@ -12,7 +12,7 @@ export default class JurosSimples extends Component {
         inputMontante: ''
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.setState({
             escTaxa: 'dia',
             escTempo: 'dia'
@@ -22,16 +22,16 @@ export default class JurosSimples extends Component {
     static navigationOptions = {
         title: 'Juros Simples',
         headerStyle: {
-          backgroundColor: '#1a237e',
+            backgroundColor: '#1a237e',
         },
         headerTintColor: '#fff',
         headerTitleStyle: {
-          fontWeight: 'bold',
+            fontWeight: 'bold',
         },
     }
 
     onChangeInput = (input, esc) => {
-        switch(esc){
+        switch (esc) {
             case 'capital':
                 this.setState({ inputCapital: input });
                 break;
@@ -56,111 +56,111 @@ export default class JurosSimples extends Component {
     }
 
     onSubmit = () => {
-        if(this.state.inputMontante === '' && this.state.inputCapital != '' && this.state.inputTaxa != '' && this.state.inputTempo != ''){
+        if (this.state.inputMontante === '' && this.state.inputCapital != '' && this.state.inputTaxa != '' && this.state.inputTempo != '') {
             let taxa, tempo;
-            if(this.state.escTaxa != this.state.escTempo){
-                if(this.state.escTaxa === 'dia'){
+            if (this.state.escTaxa != this.state.escTempo) {
+                if (this.state.escTaxa === 'dia') {
                     taxa = this.state.inputTaxa * 30;
-                }else if(this.state.escTaxa === 'ano'){
+                } else if (this.state.escTaxa === 'ano') {
                     taxa = this.state.inputTaxa / 12;
-                }else{
+                } else {
                     taxa = this.state.inputTaxa;
                 }
 
-                if(this.state.escTempo === 'dia'){
+                if (this.state.escTempo === 'dia') {
                     tempo = this.state.inputTempo / 30;
-                }else if(this.state.escTempo === 'ano'){
+                } else if (this.state.escTempo === 'ano') {
                     tempo = this.state.inputTempo * 12;
-                }else{
+                } else {
                     tempo = this.state.inputTempo;
                 }
-            }else{
+            } else {
                 taxa = this.state.inputTaxa;
                 tempo = this.state.inputTempo;
             }
 
-            let montante = this.state.inputCapital * (1 + (taxa/100) * tempo);
+            let montante = this.state.inputCapital * (1 + (taxa / 100) * tempo);
             alert('Montante: R$' + montante);
 
-        }else if(this.state.inputMontante != '' && this.state.inputCapital === '' && this.state.inputTaxa != '' && this.state.inputTempo != ''){
+        } else if (this.state.inputMontante != '' && this.state.inputCapital === '' && this.state.inputTaxa != '' && this.state.inputTempo != '') {
 
             let taxa, tempo;
-            if(this.state.escTaxa != this.state.escTempo){
-                if(this.state.escTaxa === 'dia'){
+            if (this.state.escTaxa != this.state.escTempo) {
+                if (this.state.escTaxa === 'dia') {
                     taxa = this.state.inputTaxa * 30;
-                }else if(this.state.escTaxa === 'ano'){
+                } else if (this.state.escTaxa === 'ano') {
                     taxa = this.state.inputTaxa / 12;
-                }else{
+                } else {
                     taxa = this.state.inputTaxa;
                 }
 
-                if(this.state.escTempo === 'dia'){
+                if (this.state.escTempo === 'dia') {
                     tempo = this.state.inputTempo / 30;
-                }else if(this.state.escTempo === 'ano'){
+                } else if (this.state.escTempo === 'ano') {
                     tempo = this.state.inputTempo * 12;
-                }else{
+                } else {
                     tempo = this.state.inputTempo;
                 }
-            }else{
+            } else {
                 taxa = this.state.inputTaxa;
                 tempo = this.state.inputTempo;
             }
-        
-            let capital = this.state.inputMontante/(1 + ((taxa/100) * tempo));
+
+            let capital = this.state.inputMontante / (1 + ((taxa / 100) * tempo));
             alert('Capital: R$' + capital);
 
-        }else if(this.state.inputMontante != '' && this.state.inputCapital != '' && this.state.inputTaxa === '' && this.state.inputTempo != ''){
+        } else if (this.state.inputMontante != '' && this.state.inputCapital != '' && this.state.inputTaxa === '' && this.state.inputTempo != '') {
 
             let tempo, taxa;
 
-            if(this.state.escTaxa != this.state.escTempo){
-                if(this.state.escTempo === 'dia' && this.state.escTaxa === 'mes'){
+            if (this.state.escTaxa != this.state.escTempo) {
+                if (this.state.escTempo === 'dia' && this.state.escTaxa === 'mes') {
                     tempo = this.state.inputTempo / 30;
-                }else if(this.state.escTempo === 'ano' && this.state.escTaxa === 'mes'){
+                } else if (this.state.escTempo === 'ano' && this.state.escTaxa === 'mes') {
                     tempo = this.state.inputTempo * 12;
-                }else if(this.state.escTempo === 'mes' && this.state.escTaxa === 'dia'){
+                } else if (this.state.escTempo === 'mes' && this.state.escTaxa === 'dia') {
                     tempo = this.state.inputTempo * 30;
-                }else if(this.state.escTempo === 'ano' && this.state.escTaxa === 'dia'){
+                } else if (this.state.escTempo === 'ano' && this.state.escTaxa === 'dia') {
                     tempo = (this.state.inputTempo * 12) * 30;
-                }else if(this.state.escTempo === 'mes' && this.state.escTaxa === 'ano'){
+                } else if (this.state.escTempo === 'mes' && this.state.escTaxa === 'ano') {
                     tempo = this.state.inputTempo / 12;
-                }else if(this.state.escTempo === 'dia' && this.state.escTaxa === 'ano'){
-                    tempo = (this.state.inputTempo / 30)/12;
-                }else{
+                } else if (this.state.escTempo === 'dia' && this.state.escTaxa === 'ano') {
+                    tempo = (this.state.inputTempo / 30) / 12;
+                } else {
                     tempo = this.state.inputTempo;
                 }
 
-                taxa = (this.state.inputMontante - this.state.inputCapital)/(this.state.inputCapital * tempo);
-            }else{                
-                taxa = (this.state.inputMontante - this.state.inputCapital)/(this.state.inputCapital * this.state.inputTempo);
+                taxa = (this.state.inputMontante - this.state.inputCapital) / (this.state.inputCapital * tempo);
+            } else {
+                taxa = (this.state.inputMontante - this.state.inputCapital) / (this.state.inputCapital * this.state.inputTempo);
             }
-            
+
             alert('Taxa: ' + taxa * 100 + '%');
 
-        }else if(this.state.inputMontante != '' && this.state.inputCapital != '' && this.state.inputTaxa != '' && this.state.inputTempo === ''){
+        } else if (this.state.inputMontante != '' && this.state.inputCapital != '' && this.state.inputTaxa != '' && this.state.inputTempo === '') {
 
             let taxa, tempo;
 
-            if(this.state.escTaxa != this.state.escTempo){
-                if(this.state.escTempo === 'dia' && this.state.escTaxa === 'mes'){
+            if (this.state.escTaxa != this.state.escTempo) {
+                if (this.state.escTempo === 'dia' && this.state.escTaxa === 'mes') {
                     taxa = this.state.inputTaxa / 30;
-                }else if(this.state.escTempo === 'ano' && this.state.escTaxa === 'mes'){
+                } else if (this.state.escTempo === 'ano' && this.state.escTaxa === 'mes') {
                     taxa = this.state.inputTaxa * 12;
-                }else if(this.state.escTempo === 'mes' && this.state.escTaxa === 'dia'){
+                } else if (this.state.escTempo === 'mes' && this.state.escTaxa === 'dia') {
                     taxa = this.state.inputTaxa * 30;
-                }else if(this.state.escTempo === 'ano' && this.state.escTaxa === 'dia'){
+                } else if (this.state.escTempo === 'ano' && this.state.escTaxa === 'dia') {
                     taxa = (this.state.inputTaxa * 12) * 30;
-                }else if(this.state.escTempo === 'mes' && this.state.escTaxa === 'ano'){
+                } else if (this.state.escTempo === 'mes' && this.state.escTaxa === 'ano') {
                     taxa = this.state.inputTaxa / 12;
-                }else if(this.state.escTempo === 'dia' && this.state.escTaxa === 'ano'){
-                    taxa = (this.state.inputTaxa / 30)/12;
-                }else{
+                } else if (this.state.escTempo === 'dia' && this.state.escTaxa === 'ano') {
+                    taxa = (this.state.inputTaxa / 30) / 12;
+                } else {
                     taxa = this.state.inputTaxa;
                 }
 
-                tempo = (this.state.inputMontante - this.state.inputCapital)/(this.state.inputCapital * (taxa/100));
-            }else{                
-                tempo = (this.state.inputMontante - this.state.inputCapital)/(this.state.inputCapital * (this.state.inputTaxa/100));
+                tempo = (this.state.inputMontante - this.state.inputCapital) / (this.state.inputCapital * (taxa / 100));
+            } else {
+                tempo = (this.state.inputMontante - this.state.inputCapital) / (this.state.inputCapital * (this.state.inputTaxa / 100));
             }
 
             alert('Tempo: ' + tempo);
@@ -174,24 +174,24 @@ export default class JurosSimples extends Component {
                 <View style={styles.row}>
                     <Text style={styles.label}>Capital (C):   </Text>
                     <TextInput
-                    placeholder='Capital (C)'
-                    style={styles.inputCapital}
-                    keyboardType='numeric'
-                    onChangeText={(text) => this.onChangeInput(text, 'capital')}
+                        placeholder='Capital (C)'
+                        style={styles.inputCapital}
+                        keyboardType='numeric'
+                        onChangeText={(text) => this.onChangeInput(text, 'capital')}
                     />
                 </View>
                 <View style={styles.row}>
                     <Text style={styles.label}>Taxa (i):   </Text>
                     <TextInput
-                    placeholder='Taxa (i)'
-                    style={styles.inputTaxa}
-                    keyboardType='numeric'
-                    onChangeText={(text) => this.onChangeInput(text, 'taxa')}
+                        placeholder='Taxa (i)'
+                        style={styles.inputTaxa}
+                        keyboardType='numeric'
+                        onChangeText={(text) => this.onChangeInput(text, 'taxa')}
                     />
                     <Picker
-                    selectedValue={this.state.escTaxa}
-                    style={{height: 50, width: 100}}
-                    onValueChange={(text) => this.onChangeInput(text, 'escTaxa')}>
+                        selectedValue={this.state.escTaxa}
+                        style={{ height: 50, width: 100 }}
+                        onValueChange={(text) => this.onChangeInput(text, 'escTaxa')}>
                         <Picker.Item label="Dia" value="dia" />
                         <Picker.Item label="Mês" value="mes" />
                         <Picker.Item label="Ano" value="ano" />
@@ -200,16 +200,16 @@ export default class JurosSimples extends Component {
                 <View style={styles.row}>
                     <Text style={styles.label}>Tempo (t):   </Text>
                     <TextInput
-                    placeholder='Tempo (t)'
-                    style={styles.inputTempo}
-                    keyboardType='numeric'
-                    onChangeText={(text) => this.onChangeInput(text, 'tempo')}
+                        placeholder='Tempo (t)'
+                        style={styles.inputTempo}
+                        keyboardType='numeric'
+                        onChangeText={(text) => this.onChangeInput(text, 'tempo')}
                     />
-                    
+
                     <Picker
-                    selectedValue={this.state.escTempo}
-                    style={{height: 50, width: 100}}
-                    onValueChange={(text) => this.onChangeInput(text, 'escTempo')}>
+                        selectedValue={this.state.escTempo}
+                        style={{ height: 50, width: 100 }}
+                        onValueChange={(text) => this.onChangeInput(text, 'escTempo')}>
                         <Picker.Item label="Dia" value="dia" />
                         <Picker.Item label="Mês" value="mes" />
                         <Picker.Item label="Ano" value="ano" />
@@ -218,10 +218,10 @@ export default class JurosSimples extends Component {
                 <View style={styles.row}>
                     <Text style={styles.label}>Montante (M):   </Text>
                     <TextInput
-                    placeholder='Montante (M)'
-                    style={styles.inputMontante}
-                    keyboardType='numeric'
-                    onChangeText={(text) => this.onChangeInput(text, 'montante')}
+                        placeholder='Montante (M)'
+                        style={styles.inputMontante}
+                        keyboardType='numeric'
+                        onChangeText={(text) => this.onChangeInput(text, 'montante')}
                     />
                 </View>
                 <View style={styles.rowSubmit}>
