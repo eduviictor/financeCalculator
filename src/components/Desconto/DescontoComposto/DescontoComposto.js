@@ -135,10 +135,10 @@ export default class DescontoComposto extends Component {
                         tempo = this.state.inputTempo;
                     }
 
-                    taxa = (this.state.inputNominal - this.state.inputAtual) / (this.state.inputNominal * tempo);
+                    taxa = 1 - (Math.pow(this.state.inputAtual / this.state.inputNominal, 1/tempo))
                 } else {
                     tempo = this.state.inputTempo;
-                    taxa = (this.state.inputNominal - this.state.inputAtual) / (this.state.inputNominal * tempo);
+                    taxa = 1 - (Math.pow(this.state.inputAtual / this.state.inputNominal, 1/tempo))
                 }
                 alert('Taxa: ' + taxa * 100 + '%');
 
@@ -162,11 +162,14 @@ export default class DescontoComposto extends Component {
                     } else {
                         taxa = this.state.inputTaxa;
                     }
-
-                    tempo = (this.state.inputNominal - this.state.inputAtual) / (this.state.inputNominal * (taxa / 100));
+                    // console.log(this.state);
+                    // console.log('log 1', Math.log(this.state.inputAtual / this.state.inputNominal));
+                    let log2 = Math.log(1 - (taxa / 100)); //Ta dando número negativo ao querer dia/ano, mes/ano
+                    // console.log('log 2', log2);
+                    tempo = Math.log(this.state.inputAtual / this.state.inputNominal) / Math.log(log2);
                 } else {
                     taxa = this.state.inputTaxa / 100;
-                    tempo = (this.state.inputNominal - this.state.inputAtual) / (this.state.inputNominal * taxa);
+                    tempo = Math.log(this.state.inputAtual / this.state.inputNominal) / Math.log((1 - taxa));
                 }
 
                 alert('Tempo: ' + tempo);
