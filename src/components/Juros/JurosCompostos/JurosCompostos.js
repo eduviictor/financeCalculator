@@ -22,9 +22,9 @@ export default class JurosCompostos extends Component {
     static navigationOptions = {
         title: 'Juros Compostos',
         headerStyle: {
-          backgroundColor: '#1a237e',
+          backgroundColor: '#8c7b75',
         },
-        headerTintColor: '#fff',
+        headerTintColor: 'black',
         headerTitleStyle: {
           fontWeight: 'bold',
         },
@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#ccc',
+        backgroundColor: '#8c7b75',
         padding: 20
     },
     row: {

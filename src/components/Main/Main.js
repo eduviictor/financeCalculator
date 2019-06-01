@@ -7,7 +7,7 @@ export default class Main extends Component {
   static navigationOptions = {
     title: 'Calculadora Financeira',
     headerStyle: {
-      backgroundColor: '#ccc',
+      backgroundColor: '#bcaaa4',
     },
     headerTintColor: 'black',
     headerTitleStyle: {
@@ -28,7 +28,7 @@ export default class Main extends Component {
           <TouchableOpacity 
             onPress={() => {this.props.navigation.push('JurosSimples')}}
             style={Object.assign({
-              backgroundColor: '#EEE2DF'
+              backgroundColor: '#efdcd5'
             }, styles.button)}
           >
             <Text style={styles.textButton}>Juros Simples</Text>
@@ -37,7 +37,7 @@ export default class Main extends Component {
           <TouchableOpacity 
             onPress={() => {this.props.navigation.push('JurosCompostos')}}
             style={Object.assign({
-              backgroundColor: '#C89F9C'
+              backgroundColor: '#8c7b75'
             }, styles.button)}
           >
             <Text style={styles.textButton}>Juros Compostos</Text>
@@ -48,7 +48,7 @@ export default class Main extends Component {
           <TouchableOpacity
             onPress={() => {this.props.navigation.push('DescontoSimples')}}
             style={Object.assign({
-              backgroundColor: '#C89F9C'
+              backgroundColor: '#8c7b75'
             }, styles.button)}
           >
             <Text style={styles.textButton}>Desconto Simples</Text>
@@ -57,7 +57,7 @@ export default class Main extends Component {
           <TouchableOpacity
             onPress={() => {this.props.navigation.push('DescontoComposto')}}
             style={Object.assign({
-              backgroundColor: '#EEE2DF'
+              backgroundColor: '#efdcd5'
             }, styles.button)}
           >
             <Text style={styles.textButton}>Desconto Composto</Text>

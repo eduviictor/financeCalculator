@@ -22,9 +22,9 @@ export default class JurosSimples extends Component {
     static navigationOptions = {
         title: 'Juros Simples',
         headerStyle: {
-            backgroundColor: '#1a237e',
+            backgroundColor: '#efdcd5',
         },
-        headerTintColor: '#fff',
+        headerTintColor: 'black',
         headerTitleStyle: {
             fontWeight: 'bold',
         },
@@ -239,7 +239,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#ccc',
+        backgroundColor: '#efdcd5',
         padding: 20
     },
     row: {
