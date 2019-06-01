@@ -146,17 +146,17 @@ export default class JurosCompostos extends Component {
 
             if(this.state.escTaxa != this.state.escTempo){
                 if(this.state.escTempo === 'dia' && this.state.escTaxa === 'mes'){
-                    taxa = this.state.inputTaxa / 30;
+                    taxa = Math.pow(1 + (this.state.inputTaxa / 100), 1 / 30) - 1;
                 }else if(this.state.escTempo === 'ano' && this.state.escTaxa === 'mes'){
-                    taxa = this.state.inputTaxa * 12;
+                    taxa = Math.pow(1 + (this.state.inputTaxa / 100), 12) - 1;
                 }else if(this.state.escTempo === 'mes' && this.state.escTaxa === 'dia'){
-                    taxa = this.state.inputTaxa * 30;
+                    taxa = Math.pow(1 + (this.state.inputTaxa / 100), 30) - 1;
                 }else if(this.state.escTempo === 'ano' && this.state.escTaxa === 'dia'){
-                    taxa = (this.state.inputTaxa * 12) * 30;
+                    taxa = Math.pow(1 + (this.state.inputTaxa / 100), 360) - 1;
                 }else if(this.state.escTempo === 'mes' && this.state.escTaxa === 'ano'){
-                    taxa = this.state.inputTaxa / 12;
+                    taxa = Math.pow(1 + (this.state.inputTaxa / 100), 1 / 12) - 1;
                 }else if(this.state.escTempo === 'dia' && this.state.escTaxa === 'ano'){
-                    taxa = (this.state.inputTaxa / 30)/12;
+                    taxa = Math.pow(1 + (this.state.inputTaxa / 100), 1 / 360) - 1;
                 }else{
                     taxa = this.state.inputTaxa;
                 }

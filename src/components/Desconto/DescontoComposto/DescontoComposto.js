@@ -164,12 +164,15 @@ export default class DescontoComposto extends Component {
                     }
                     // console.log(this.state);
                     // console.log('log 1', Math.log(this.state.inputAtual / this.state.inputNominal));
-                    let log2 = Math.log(1 - (taxa / 100)); //Ta dando número negativo ao querer dia/ano, mes/ano
+                    // let log2 = Math.log(taxa / 100); //Ta dando número negativo ao querer dia/ano, mes/ano
                     // console.log('log 2', log2);
-                    tempo = Math.log(this.state.inputAtual / this.state.inputNominal) / Math.log(log2);
+                    tempo = Math.log(1 - (this.state.inputAtual / this.state.inputNominal)) / Math.log(taxa / 100);
                 } else {
+                    console.log(this.state);
                     taxa = this.state.inputTaxa / 100;
-                    tempo = Math.log(this.state.inputAtual / this.state.inputNominal) / Math.log((1 - taxa));
+                    // let log2 = Math.log(taxa); //Ta dando número negativo ao querer dia/ano, mes/ano
+                    // console.log('log 2', log2);
+                    tempo = Math.log(1 - (this.state.inputAtual / this.state.inputNominal)) / Math.log(taxa);
                 }
 
                 alert('Tempo: ' + tempo);

@@ -50,6 +50,18 @@ export default class Main extends Component {
         >
           <Text style={styles.textButton}>Juros Compostos</Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {this.props.navigation.push('DescontoSimples')}}
+          style={styles.button}
+        >
+          <Text style={styles.textButton}>Desconto Simples</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {this.props.navigation.push('DescontoComposto')}}
+          style={styles.button}
+        >
+          <Text style={styles.textButton}>Desconto Composto</Text>
+        </TouchableOpacity>
       </View>
       // <FlatList 
       // data={this.state.itensMenu}
