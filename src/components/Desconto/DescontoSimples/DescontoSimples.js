@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, TextInput, Picker, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
+import { Text, View, StyleSheet, TextInput, Picker, TouchableOpacity, KeyboardAvoidingView, Alert } from 'react-native';
 
 export default class DescontoSimples extends Component {
 
@@ -86,7 +86,7 @@ export default class DescontoSimples extends Component {
                 }
 
                 let nominal = this.state.inputAtual / (1 - (taxa / 100) * tempo);
-                alert('Nominal: R$' + nominal);
+                Alert.alert('Resultado: ', 'Nominal: R$' + nominal.toFixed(2) + '\nDesconto: R$' + (nominal - this.state.inputAtual).toFixed(2));
 
             } else if (this.state.inputNominal != '' && this.state.inputAtual === '' && this.state.inputTaxa != '' && this.state.inputTempo != '') {
 
@@ -113,7 +113,7 @@ export default class DescontoSimples extends Component {
                 }
 
                 let atual = this.state.inputNominal * (1 - (taxa / 100) * tempo);
-                alert('Após desconto: R$' + atual);
+                Alert.alert('Resultado: ', 'Após desconto: R$' + atual.toFixed(2) + '\nDesconto: R$' + (this.state.inputNominal - atual).toFixed(2));
 
             } else if (this.state.inputNominal != '' && this.state.inputAtual != '' && this.state.inputTaxa === '' && this.state.inputTempo != '') {
 
@@ -141,7 +141,7 @@ export default class DescontoSimples extends Component {
                     tempo = this.state.inputTempo;
                     taxa = (this.state.inputNominal - this.state.inputAtual) / (this.state.inputNominal * tempo);
                 }
-                alert('Taxa: ' + taxa * 100 + '%');
+                Alert.alert('Resultado: ', 'Taxa: ' + (taxa * 100).toFixed(3) + '%');
 
             } else if (this.state.inputNominal != '' && this.state.inputAtual != '' && this.state.inputTaxa != '' && this.state.inputTempo === '') {
 
@@ -170,7 +170,7 @@ export default class DescontoSimples extends Component {
                     tempo = (this.state.inputNominal - this.state.inputAtual) / (this.state.inputNominal * taxa);
                 }
 
-                alert('Tempo: ' + tempo);
+                Alert.alert('Resultado: ', 'Tempo: ' + tempo.toFixed(3));
             }
         } else if (this.state.escDesconto === 'racional') {
             if (this.state.inputNominal === '' && this.state.inputAtual != '' && this.state.inputTaxa != '' && this.state.inputTempo != '') {
@@ -197,7 +197,7 @@ export default class DescontoSimples extends Component {
                 }
 
                 let nominal = this.state.inputAtual * (1 + (taxa / 100) * tempo);
-                alert('Nominal: R$' + nominal);
+                Alert.alert('Resultado: ', 'Nominal: R$' + nominal.toFixed(2) + '\nDesconto: R$' + (nominal - this.state.inputAtual).toFixed(2));
 
             } else if (this.state.inputNominal != '' && this.state.inputAtual === '' && this.state.inputTaxa != '' && this.state.inputTempo != '') {
 
@@ -224,7 +224,7 @@ export default class DescontoSimples extends Component {
                 }
 
                 let atual = this.state.inputNominal / (1 + (taxa / 100) * tempo);
-                alert('Após desconto: R$' + atual);
+                Alert.alert('Resultado: ', 'Após desconto: R$' + atual.toFixed(2) + '\nDesconto: R$' + (this.state.inputNominal - atual).toFixed(2));
 
             } else if (this.state.inputNominal != '' && this.state.inputAtual != '' && this.state.inputTaxa === '' && this.state.inputTempo != '') {
 
@@ -252,7 +252,7 @@ export default class DescontoSimples extends Component {
                     tempo = this.state.inputTempo;
                     taxa = ((this.state.inputNominal / this.state.inputAtual) - 1) / tempo;
                 }
-                alert('Taxa: ' + taxa * 100 + '%');
+                Alert.alert('Resultado: ', 'Taxa: ' + (taxa * 100).toFixed(3) + '%');
 
             } else if (this.state.inputNominal != '' && this.state.inputAtual != '' && this.state.inputTaxa != '' && this.state.inputTempo === '') {
 
@@ -281,7 +281,7 @@ export default class DescontoSimples extends Component {
                     tempo = ((this.state.inputNominal / this.state.inputAtual) - 1) / taxa;
                 }
 
-                alert('Tempo: ' + tempo);
+                Alert.alert('Resultado: ', 'Tempo: ' + tempo.toFixed(3));
             }
         }
 

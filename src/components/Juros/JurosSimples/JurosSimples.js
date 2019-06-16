@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, TextInput, Picker, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
+import { Text, View, StyleSheet, TextInput, Picker, TouchableOpacity, KeyboardAvoidingView, Alert } from 'react-native';
 
 export default class JurosSimples extends Component {
 
@@ -80,7 +80,7 @@ export default class JurosSimples extends Component {
             }
 
             let montante = this.state.inputCapital * (1 + (taxa / 100) * tempo);
-            alert('Montante: R$' + montante.toFixed(2));
+            Alert.alert('Resultado:', 'Montante: R$' + montante.toFixed(2) + '\nJuros: R$' + (montante - this.state.inputCapital).toFixed(2));
 
         } else if (this.state.inputMontante != '' && this.state.inputCapital === '' && this.state.inputTaxa != '' && this.state.inputTempo != '') {
 
@@ -107,7 +107,7 @@ export default class JurosSimples extends Component {
             }
 
             let capital = this.state.inputMontante / (1 + ((taxa / 100) * tempo));
-            alert('Capital: R$' + capital);
+            Alert.alert('Resultado: ', 'Capital: R$' + capital.toFixed(2) + '\nJuros: R$' + (this.state.inputMontante - capital).toFixed(2));
 
         } else if (this.state.inputMontante != '' && this.state.inputCapital != '' && this.state.inputTaxa === '' && this.state.inputTempo != '') {
 
@@ -135,7 +135,7 @@ export default class JurosSimples extends Component {
                 taxa = (this.state.inputMontante - this.state.inputCapital) / (this.state.inputCapital * this.state.inputTempo);
             }
 
-            alert('Taxa: ' + taxa * 100 + '%');
+            Alert.alert('Resultado: ', 'Taxa: ' + (taxa * 100).toFixed(3) + '%');
 
         } else if (this.state.inputMontante != '' && this.state.inputCapital != '' && this.state.inputTaxa != '' && this.state.inputTempo === '') {
 
@@ -163,7 +163,7 @@ export default class JurosSimples extends Component {
                 tempo = (this.state.inputMontante - this.state.inputCapital) / (this.state.inputCapital * (this.state.inputTaxa / 100));
             }
 
-            alert('Tempo: ' + tempo);
+            Alert.alert('Resultado: ', 'Tempo: ' + tempo.toFixed(3));
         }
 
     }
