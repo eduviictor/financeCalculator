@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, TextInput, Picker, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, TextInput, Picker, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 
 export default class JurosSimples extends Component {
 
@@ -80,7 +80,7 @@ export default class JurosSimples extends Component {
             }
 
             let montante = this.state.inputCapital * (1 + (taxa / 100) * tempo);
-            alert('Montante: R$' + montante);
+            alert('Montante: R$' + montante.toFixed(2));
 
         } else if (this.state.inputMontante != '' && this.state.inputCapital === '' && this.state.inputTaxa != '' && this.state.inputTempo != '') {
 
@@ -171,64 +171,67 @@ export default class JurosSimples extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Capital (C):   </Text>
-                    <TextInput
-                        placeholder='Capital (C)'
-                        style={styles.inputCapital}
-                        keyboardType='numeric'
-                        onChangeText={(text) => this.onChangeInput(text, 'capital')}
-                    />
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Taxa (i):   </Text>
-                    <TextInput
-                        placeholder='Taxa (i)'
-                        style={styles.inputTaxa}
-                        keyboardType='numeric'
-                        onChangeText={(text) => this.onChangeInput(text, 'taxa')}
-                    />
-                    <Picker
-                        selectedValue={this.state.escTaxa}
-                        style={{ height: 50, width: 100 }}
-                        onValueChange={(text) => this.onChangeInput(text, 'escTaxa')}>
-                        <Picker.Item label="Dia" value="dia" />
-                        <Picker.Item label="Mês" value="mes" />
-                        <Picker.Item label="Ano" value="ano" />
-                    </Picker>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Tempo (t):   </Text>
-                    <TextInput
-                        placeholder='Tempo (t)'
-                        style={styles.inputTempo}
-                        keyboardType='numeric'
-                        onChangeText={(text) => this.onChangeInput(text, 'tempo')}
-                    />
+                <KeyboardAvoidingView behavior="padding">
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Capital (C):   </Text>
+                        <TextInput
+                            placeholder='Capital (C)'
+                            style={styles.inputCapital}
+                            keyboardType='numeric'
+                            onChangeText={(text) => this.onChangeInput(text, 'capital')}
+                        />
+                    </View>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Taxa (i):   </Text>
+                        <TextInput
+                            placeholder='Taxa (i)'
+                            style={styles.inputTaxa}
+                            keyboardType='numeric'
+                            onChangeText={(text) => this.onChangeInput(text, 'taxa')}
+                        />
+                        <Picker
+                            selectedValue={this.state.escTaxa}
+                            style={{ height: 50, width: 100 }}
+                            onValueChange={(text) => this.onChangeInput(text, 'escTaxa')}>
+                            <Picker.Item label="Dia" value="dia" />
+                            <Picker.Item label="Mês" value="mes" />
+                            <Picker.Item label="Ano" value="ano" />
+                        </Picker>
+                    </View>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Tempo (t):   </Text>
+                        <TextInput
+                            placeholder='Tempo (t)'
+                            style={styles.inputTempo}
+                            keyboardType='numeric'
+                            onChangeText={(text) => this.onChangeInput(text, 'tempo')}
+                        />
 
-                    <Picker
-                        selectedValue={this.state.escTempo}
-                        style={{ height: 50, width: 100 }}
-                        onValueChange={(text) => this.onChangeInput(text, 'escTempo')}>
-                        <Picker.Item label="Dia" value="dia" />
-                        <Picker.Item label="Mês" value="mes" />
-                        <Picker.Item label="Ano" value="ano" />
-                    </Picker>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Montante (M):   </Text>
-                    <TextInput
-                        placeholder='Montante (M)'
-                        style={styles.inputMontante}
-                        keyboardType='numeric'
-                        onChangeText={(text) => this.onChangeInput(text, 'montante')}
-                    />
-                </View>
-                <View style={styles.rowSubmit}>
-                    <TouchableOpacity style={styles.buttonSubmit} onPress={() => this.onSubmit()}>
-                        <Text style={styles.textSubmit}>Calcular!</Text>
-                    </TouchableOpacity>
-                </View>
+                        <Picker
+                            selectedValue={this.state.escTempo}
+                            style={{ height: 50, width: 100 }}
+                            onValueChange={(text) => this.onChangeInput(text, 'escTempo')}>
+                            <Picker.Item label="Dia" value="dia" />
+                            <Picker.Item label="Mês" value="mes" />
+                            <Picker.Item label="Ano" value="ano" />
+                        </Picker>
+                    </View>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Montante (M):   </Text>
+                        <TextInput
+                            placeholder='Montante (M)'
+                            style={styles.inputMontante}
+                            keyboardType='numeric'
+                            onChangeText={(text) => this.onChangeInput(text, 'montante')}
+                        />
+                    </View>
+                    <View style={styles.rowSubmit}>
+                        <TouchableOpacity style={styles.buttonSubmit} onPress={() => this.onSubmit()}>
+                            <Text style={styles.textSubmit}>Calcular!</Text>
+                        </TouchableOpacity>
+                    </View>
+                </KeyboardAvoidingView>
+                
             </View>
         )
     }
@@ -243,13 +246,11 @@ const styles = StyleSheet.create({
         padding: 20
     },
     row: {
-        flex: 0.1,
+        flex: 0.2,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         width: '100%',
-        // backgroundColor: 'orange',
-        margin: 2,
     },
     label: {
         fontSize: 18,
@@ -298,7 +299,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         width: '100%',
-        margin: 2,
+        marginTop: 2,
     },
     buttonSubmit: {
         padding: 10,

@@ -24,13 +24,13 @@ class App extends Component {
 
 
 const AppNavigator = createStackNavigator({
-  Home: Main,
-  JurosSimples: JurosSimples,
-  JurosCompostos: JurosCompostos,
-  DescontoSimples: DescontoSimples,
-  DescontoComposto: DescontoComposto
+  Main,
+  JurosSimples,
+  JurosCompostos,
+  DescontoSimples,
+  DescontoComposto
 },{
-  initialRouteName: "Home",
+  initialRouteName: "Main",
 }
 );
 

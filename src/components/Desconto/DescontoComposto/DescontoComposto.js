@@ -373,23 +373,24 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'baseline',
         backgroundColor: '#efdcd5',
         padding: 20
     },
     row: {
-        flex: 0.1,
+        flex: 0.2,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         width: '100%',
-        // backgroundColor: 'orange',
-        margin: 2,
+        // backgroundColor: 'red',
+        marginBottom: 2,
+        // padding: 0
     },
     label: {
         fontSize: 18,
         fontWeight: 'bold',
-        color: 'black'
+        color: 'black',
     },
     inputNominal: {
         width: '70%',
@@ -433,7 +434,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         width: '100%',
-        margin: 2,
+        marginTop: 10,
     },
     buttonSubmit: {
         padding: 10,
