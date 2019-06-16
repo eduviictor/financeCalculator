@@ -176,6 +176,8 @@ export default class DescontoComposto extends Component {
                 }
 
                 Alert.alert('Resultado: ', 'Tempo: ' + tempo.toFixed(3));
+            } else {
+                Alert.alert("Deixe em branco o que deseja calcular!");
             }
         } else if (this.state.escDesconto === 'racional') {
             if (this.state.inputNominal === '' && this.state.inputAtual != '' && this.state.inputTaxa != '' && this.state.inputTempo != '') {
@@ -287,6 +289,8 @@ export default class DescontoComposto extends Component {
                 }
 
                 Alert.alert('Resultado: ', 'Tempo: ' + tempo.toFixed(3));
+            } else {
+                Alert.alert("Deixe em branco o que deseja calcular!");
             }
         }
 

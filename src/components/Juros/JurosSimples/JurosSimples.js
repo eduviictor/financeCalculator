@@ -164,6 +164,8 @@ export default class JurosSimples extends Component {
             }
 
             Alert.alert('Resultado: ', 'Tempo: ' + tempo.toFixed(3));
+        } else {
+            Alert.alert("Deixe em branco o que deseja calcular!");
         }
 
     }

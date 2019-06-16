@@ -30,7 +30,7 @@ const AppNavigator = createStackNavigator({
   DescontoSimples,
   DescontoComposto
 },{
-  initialRouteName: "DescontoComposto",
+  initialRouteName: "DescontoSimples",
 }
 );
 

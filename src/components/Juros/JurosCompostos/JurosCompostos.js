@@ -171,6 +171,8 @@ export default class JurosCompostos extends Component {
             tempo = Math.log(base1)/Math.log(base2);
 
             Alert.alert('Resultado: ', 'Tempo: ' + tempo.toFixed(3));
+        } else {
+            Alert.alert("Deixe em branco o que deseja calcular!");
         }
 
     }
