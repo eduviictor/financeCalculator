@@ -57,57 +57,55 @@ export default class JurosCompostos extends Component {
 
     onSubmit = () => {
         if(this.state.inputMontante === '' && this.state.inputCapital != '' && this.state.inputTaxa != '' && this.state.inputTempo != ''){
-            let taxa, tempo;
+            let taxa;
             if(this.state.escTaxa != this.state.escTempo){
-                if(this.state.escTaxa === 'dia'){
+                if (this.state.escTaxa === 'dia' && this.state.escTempo === 'mes') {
                     taxa = Math.pow(1 + (this.state.inputTaxa / 100), 30) - 1;
-                }else if(this.state.escTaxa === 'ano'){
+                } else if (this.state.escTaxa === 'ano' && this.state.escTempo === 'mes') {
                     taxa = Math.pow(1 + (this.state.inputTaxa / 100), 1 / 12) - 1;
-                }else{
+                } else if (this.state.escTaxa === 'dia' && this.state.escTempo === 'ano') {
+                    taxa = Math.pow(1 + (this.state.inputTaxa / 100), 360) - 1;
+                } else if (this.state.escTaxa === 'mes' && this.state.escTempo === 'ano') {
+                    taxa = Math.pow(1 + (this.state.inputTaxa / 100), 12) - 1;
+                } else if (this.state.escTaxa === 'mes' && this.state.escTempo === 'dia') {
+                    taxa = Math.pow(1 + (this.state.inputTaxa / 100), 1 / 30) - 1;
+                } else if (this.state.escTaxa === 'ano' && this.state.escTempo === 'dia') {
+                    taxa = Math.pow(1 + (this.state.inputTaxa / 100), 1 / 360) - 1;
+                } else {
                     taxa = this.state.inputTaxa / 100;
-                }
-
-                if(this.state.escTempo === 'dia'){
-                    tempo = this.state.inputTempo / 30;
-                }else if(this.state.escTempo === 'ano'){
-                    tempo = this.state.inputTempo * 12;
-                }else{
-                    tempo = this.state.inputTempo;
-                }
+                }    
             }else{
                 taxa = this.state.inputTaxa / 100;
-                tempo = this.state.inputTempo;
             }
             let base = 1 + taxa;
-            let montante = this.state.inputCapital * Math.pow(base, tempo);
+            let montante = this.state.inputCapital * Math.pow(base, this.state.inputTempo);
             Alert.alert('Resultado:', 'Montante: R$' + montante.toFixed(2) + '\nJuros: R$' + (montante - this.state.inputCapital).toFixed(2));
 
         }else if(this.state.inputMontante != '' && this.state.inputCapital === '' && this.state.inputTaxa != '' && this.state.inputTempo != ''){
 
-            let taxa, tempo;
+            let taxa;
             if(this.state.escTaxa != this.state.escTempo){
-                if(this.state.escTaxa === 'dia'){
+                if (this.state.escTaxa === 'dia' && this.state.escTempo === 'mes') {
                     taxa = Math.pow(1 + (this.state.inputTaxa / 100), 30) - 1;
-                }else if(this.state.escTaxa === 'ano'){
+                } else if (this.state.escTaxa === 'ano' && this.state.escTempo === 'mes') {
                     taxa = Math.pow(1 + (this.state.inputTaxa / 100), 1 / 12) - 1;
-                }else{
+                } else if (this.state.escTaxa === 'dia' && this.state.escTempo === 'ano') {
+                    taxa = Math.pow(1 + (this.state.inputTaxa / 100), 360) - 1;
+                } else if (this.state.escTaxa === 'mes' && this.state.escTempo === 'ano') {
+                    taxa = Math.pow(1 + (this.state.inputTaxa / 100), 12) - 1;
+                } else if (this.state.escTaxa === 'mes' && this.state.escTempo === 'dia') {
+                    taxa = Math.pow(1 + (this.state.inputTaxa / 100), 1 / 30) - 1;
+                } else if (this.state.escTaxa === 'ano' && this.state.escTempo === 'dia') {
+                    taxa = Math.pow(1 + (this.state.inputTaxa / 100), 1 / 360) - 1;
+                } else {
                     taxa = this.state.inputTaxa / 100;
-                }
-
-                if(this.state.escTempo === 'dia'){
-                    tempo = this.state.inputTempo / 30;
-                }else if(this.state.escTempo === 'ano'){
-                    tempo = this.state.inputTempo * 12;
-                }else{
-                    tempo = this.state.inputTempo;
-                }
+                }    
             }else{
                 taxa = this.state.inputTaxa / 100;
-                tempo = this.state.inputTempo;
             }
             
             let base = 1 + taxa;
-            let capital = this.state.inputMontante/Math.pow(base, tempo);
+            let capital = this.state.inputMontante/Math.pow(base, this.state.inputTempo);
             Alert.alert('Resultado: ', 'Capital: R$' + capital.toFixed(2) + '\nJuros: R$' + (this.state.inputMontante - capital).toFixed(2));
 
         }else if(this.state.inputMontante != '' && this.state.inputCapital != '' && this.state.inputTaxa === '' && this.state.inputTempo != ''){
@@ -142,33 +140,30 @@ export default class JurosCompostos extends Component {
 
         }else if(this.state.inputMontante != '' && this.state.inputCapital != '' && this.state.inputTaxa != '' && this.state.inputTempo === ''){
 
-            let taxa, tempo;
+            let tempo;
+            let base1 = this.state.inputMontante / this.state.inputCapital;
+            let base2 = 1 + (this.state.inputTaxa / 100);
 
             if(this.state.escTaxa != this.state.escTempo){
-                if(this.state.escTempo === 'dia' && this.state.escTaxa === 'mes'){
-                    taxa = Math.pow(1 + (this.state.inputTaxa / 100), 1 / 30) - 1;
-                }else if(this.state.escTempo === 'ano' && this.state.escTaxa === 'mes'){
-                    taxa = Math.pow(1 + (this.state.inputTaxa / 100), 12) - 1;
-                }else if(this.state.escTempo === 'mes' && this.state.escTaxa === 'dia'){
-                    taxa = Math.pow(1 + (this.state.inputTaxa / 100), 30) - 1;
-                }else if(this.state.escTempo === 'ano' && this.state.escTaxa === 'dia'){
-                    taxa = Math.pow(1 + (this.state.inputTaxa / 100), 360) - 1;
-                }else if(this.state.escTempo === 'mes' && this.state.escTaxa === 'ano'){
-                    taxa = Math.pow(1 + (this.state.inputTaxa / 100), 1 / 12) - 1;
-                }else if(this.state.escTempo === 'dia' && this.state.escTaxa === 'ano'){
-                    taxa = Math.pow(1 + (this.state.inputTaxa / 100), 1 / 360) - 1;
-                }else{
-                    taxa = this.state.inputTaxa;
+                tempo = Math.log(base1)/Math.log(base2);
+
+                if (this.state.escTaxa === 'dia' && this.state.escTempo === 'mes') {
+                    tempo = tempo / 30;
+                } else if (this.state.escTaxa === 'ano' && this.state.escTempo === 'mes') {
+                    tempo = tempo * 12;
+                } else if (this.state.escTaxa === 'dia' && this.state.escTempo === 'ano') {
+                    tempo = tempo / 360;
+                } else if (this.state.escTaxa === 'mes' && this.state.escTempo === 'ano') {
+                    tempo = tempo / 12;
+                } else if (this.state.escTaxa === 'mes' && this.state.escTempo === 'dia') {
+                    tempo = tempo * 30;
+                } else if (this.state.escTaxa === 'ano' && this.state.escTempo === 'dia') {
+                    tempo = tempo * 360;
                 }
 
             }else{                
-                taxa = this.state.inputTaxa;
+                tempo = Math.log(base1)/Math.log(base2);
             }
-
-            let base1 = this.state.inputMontante/this.state.inputCapital;
-            let base2 = 1 + (taxa/100);
-
-            tempo = Math.log(base1)/Math.log(base2);
 
             Alert.alert('Resultado: ', 'Tempo: ' + tempo.toFixed(3));
         } else {
