@@ -63,56 +63,54 @@ export default class DescontoComposto extends Component {
     onSubmit = () => {
         if (this.state.escDesconto === 'comercial') {
             if (this.state.inputNominal === '' && this.state.inputAtual != '' && this.state.inputTaxa != '' && this.state.inputTempo != '') {
-                let taxa, tempo;
+                let taxa;
                 if (this.state.escTaxa != this.state.escTempo) {
-                    if (this.state.escTaxa === 'dia') {
-                        taxa = this.state.inputTaxa * 30;
-                    } else if (this.state.escTaxa === 'ano') {
-                        taxa = this.state.inputTaxa / 12;
+                    if (this.state.escTaxa === 'dia' && this.state.escTempo === 'mes') {
+                        taxa = Math.pow(1 + (this.state.inputTaxa / 100), 30) - 1;
+                    } else if (this.state.escTaxa === 'ano' && this.state.escTempo === 'mes') {
+                        taxa = Math.pow(1 + (this.state.inputTaxa / 100), 1 / 12) - 1;
+                    } else if (this.state.escTaxa === 'dia' && this.state.escTempo === 'ano') {
+                        taxa = Math.pow(1 + (this.state.inputTaxa / 100), 360) - 1;
+                    } else if (this.state.escTaxa === 'mes' && this.state.escTempo === 'ano') {
+                        taxa = Math.pow(1 + (this.state.inputTaxa / 100), 12) - 1;
+                    } else if (this.state.escTaxa === 'mes' && this.state.escTempo === 'dia') {
+                        taxa = Math.pow(1 + (this.state.inputTaxa / 100), 1 / 30) - 1;
+                    } else if (this.state.escTaxa === 'ano' && this.state.escTempo === 'dia') {
+                        taxa = Math.pow(1 + (this.state.inputTaxa / 100), 1 / 360) - 1;
                     } else {
-                        taxa = this.state.inputTaxa;
-                    }
-
-                    if (this.state.escTempo === 'dia') {
-                        tempo = this.state.inputTempo / 30;
-                    } else if (this.state.escTempo === 'ano') {
-                        tempo = this.state.inputTempo * 12;
-                    } else {
-                        tempo = this.state.inputTempo;
+                        taxa = this.state.inputTaxa / 100;
                     }
                 } else {
-                    taxa = this.state.inputTaxa;
-                    tempo = this.state.inputTempo;
+                    taxa = this.state.inputTaxa / 100;
                 }
 
-                let nominal = this.state.inputAtual / Math.pow((1 - (taxa / 100)), tempo);
+                let nominal = this.state.inputAtual / Math.pow((1 - taxa), this.state.inputTempo);
                 Alert.alert('Resultado: ', 'Nominal: R$' + nominal.toFixed(2) + '\nDesconto: R$' + (nominal - this.state.inputAtual).toFixed(2));
 
             } else if (this.state.inputNominal != '' && this.state.inputAtual === '' && this.state.inputTaxa != '' && this.state.inputTempo != '') {
 
-                let taxa, tempo;
+                let taxa;
                 if (this.state.escTaxa != this.state.escTempo) {
-                    if (this.state.escTaxa === 'dia') {
-                        taxa = this.state.inputTaxa * 30;
-                    } else if (this.state.escTaxa === 'ano') {
-                        taxa = this.state.inputTaxa / 12;
+                    if (this.state.escTaxa === 'dia' && this.state.escTempo === 'mes') {
+                        taxa = Math.pow(1 + (this.state.inputTaxa / 100), 30) - 1;
+                    } else if (this.state.escTaxa === 'ano' && this.state.escTempo === 'mes') {
+                        taxa = Math.pow(1 + (this.state.inputTaxa / 100), 1 / 12) - 1;
+                    } else if (this.state.escTaxa === 'dia' && this.state.escTempo === 'ano') {
+                        taxa = Math.pow(1 + (this.state.inputTaxa / 100), 360) - 1;
+                    } else if (this.state.escTaxa === 'mes' && this.state.escTempo === 'ano') {
+                        taxa = Math.pow(1 + (this.state.inputTaxa / 100), 12) - 1;
+                    } else if (this.state.escTaxa === 'mes' && this.state.escTempo === 'dia') {
+                        taxa = Math.pow(1 + (this.state.inputTaxa / 100), 1 / 30) - 1;
+                    } else if (this.state.escTaxa === 'ano' && this.state.escTempo === 'dia') {
+                        taxa = Math.pow(1 + (this.state.inputTaxa / 100), 1 / 360) - 1;
                     } else {
-                        taxa = this.state.inputTaxa;
-                    }
-
-                    if (this.state.escTempo === 'dia') {
-                        tempo = this.state.inputTempo / 30;
-                    } else if (this.state.escTempo === 'ano') {
-                        tempo = this.state.inputTempo * 12;
-                    } else {
-                        tempo = this.state.inputTempo;
+                        taxa = this.state.inputTaxa / 100;
                     }
                 } else {
-                    taxa = this.state.inputTaxa;
-                    tempo = this.state.inputTempo;
+                    taxa = this.state.inputTaxa / 100;
                 }
 
-                let atual = this.state.inputNominal * Math.pow((1 - (taxa / 100)), tempo);
+                let atual = this.state.inputNominal * Math.pow((1 - taxa), this.state.inputTempo);
                 Alert.alert('Resultado: ', 'Após desconto: R$' + atual.toFixed(2) + '\nDesconto: R$' + (this.state.inputNominal - atual).toFixed(2));
 
             } else if (this.state.inputNominal != '' && this.state.inputAtual != '' && this.state.inputTaxa === '' && this.state.inputTempo != '') {
@@ -145,45 +143,27 @@ export default class DescontoComposto extends Component {
 
             } else if (this.state.inputNominal != '' && this.state.inputAtual != '' && this.state.inputTaxa != '' && this.state.inputTempo === '') {
 
-                let taxa, tempo, desconto;
+                let tempo, desconto;
                 desconto = this.state.inputNominal - this.state.inputAtual;
-                tempo = Math.log10(1 - (desconto / this.state.inputNominal)) / Math.log10(1 - this.state.inputTaxa);
+                tempo = Math.log10(1 - (desconto / this.state.inputNominal)) / Math.log10(1 - (this.state.inputTaxa / 100));
 
                 if (this.state.escTaxa != this.state.escTempo) {
-                    if(tempo > 0){
-                        tempo = Math.round(tempo);
-                    }
-                    if (this.state.escTempo === 'dia' && this.state.escTaxa === 'mes') {
-                        tempo = tempo * 30;
-                        // taxa = Math.pow(1 + (this.state.inputTaxa / 100), 1 / 30) - 1;
-                    } else if (this.state.escTempo === 'ano' && this.state.escTaxa === 'mes') {
-                        tempo = tempo / 12;
-                        // taxa = Math.pow(1 + (this.state.inputTaxa / 100), 12) - 1;
-                    } else if (this.state.escTempo === 'mes' && this.state.escTaxa === 'dia') {
+                    
+                    if (this.state.escTaxa === 'dia' && this.state.escTempo === 'mes') {
                         tempo = tempo / 30;
-                        // taxa = Math.pow(1 + (this.state.inputTaxa / 100), 30) - 1;
-                    } else if (this.state.escTempo === 'ano' && this.state.escTaxa === 'dia') {
-                        tempo = tempo / 360;
-                        // taxa = Math.pow(1 + (this.state.inputTaxa / 100), 360) - 1;
-                    } else if (this.state.escTempo === 'mes' && this.state.escTaxa === 'ano') {
+                    } else if (this.state.escTaxa === 'ano' && this.state.escTempo === 'mes') {
                         tempo = tempo * 12;
-                        // taxa = Math.pow(1 + (this.state.inputTaxa / 100), 1 / 12) - 1;
-                    } else if (this.state.escTempo === 'dia' && this.state.escTaxa === 'ano') {
+                    } else if (this.state.escTaxa === 'dia' && this.state.escTempo === 'ano') {
+                        tempo = tempo / 360;
+                    } else if (this.state.escTaxa === 'mes' && this.state.escTempo === 'ano') {
+                        tempo = tempo / 12;
+                    } else if (this.state.escTaxa === 'mes' && this.state.escTempo === 'dia') {
+                        tempo = tempo * 30;
+                    } else if (this.state.escTaxa === 'ano' && this.state.escTempo === 'dia') {
                         tempo = tempo * 360;
-                        // taxa = Math.pow(1 + (this.state.inputTaxa / 100), 1 / 360) - 1;
                     }
                     
-                    // let desconto = this.state.inputNominal - this.state.inputAtual;
-                } else {
-                    taxa = this.state.inputTaxa / 100;
-
-                    let desconto = this.state.inputNominal - this.state.inputAtual;
-                    tempo = desconto / (this.state.inputNominal * taxa);
                 }
-
-                // if(tempo > 0){
-                //     tempo = Math.round(tempo);
-                // }
 
                 Alert.alert('Resultado: ', 'Tempo: ' + tempo.toFixed(3));
             } else {
@@ -191,56 +171,54 @@ export default class DescontoComposto extends Component {
             }
         } else if (this.state.escDesconto === 'racional') {
             if (this.state.inputNominal === '' && this.state.inputAtual != '' && this.state.inputTaxa != '' && this.state.inputTempo != '') {
-                let taxa, tempo;
+                let taxa;
                 if (this.state.escTaxa != this.state.escTempo) {
-                    if (this.state.escTaxa === 'dia') {
+                    if (this.state.escTaxa === 'dia' && this.state.escTempo === 'mes') {
                         taxa = Math.pow(1 + (this.state.inputTaxa / 100), 30) - 1;
-                    } else if (this.state.escTaxa === 'ano') {
+                    } else if (this.state.escTaxa === 'ano' && this.state.escTempo === 'mes') {
                         taxa = Math.pow(1 + (this.state.inputTaxa / 100), 1 / 12) - 1;
+                    } else if (this.state.escTaxa === 'dia' && this.state.escTempo === 'ano') {
+                        taxa = Math.pow(1 + (this.state.inputTaxa / 100), 360) - 1;
+                    } else if (this.state.escTaxa === 'mes' && this.state.escTempo === 'ano') {
+                        taxa = Math.pow(1 + (this.state.inputTaxa / 100), 12) - 1;
+                    } else if (this.state.escTaxa === 'mes' && this.state.escTempo === 'dia') {
+                        taxa = Math.pow(1 + (this.state.inputTaxa / 100), 1 / 30) - 1;
+                    } else if (this.state.escTaxa === 'ano' && this.state.escTempo === 'dia') {
+                        taxa = Math.pow(1 + (this.state.inputTaxa / 100), 1 / 360) - 1;
                     } else {
-                        taxa = this.state.inputTaxa;
-                    }
-
-                    if (this.state.escTempo === 'dia') {
-                        tempo = this.state.inputTempo / 30;
-                    } else if (this.state.escTempo === 'ano') {
-                        tempo = this.state.inputTempo * 12;
-                    } else {
-                        tempo = this.state.inputTempo;
+                        taxa = this.state.inputTaxa / 100;
                     }
                 } else {
-                    taxa = this.state.inputTaxa;
-                    tempo = this.state.inputTempo;
+                    taxa = this.state.inputTaxa / 100;
                 }
 
-                let nominal = this.state.inputAtual * Math.pow(1 + (taxa / 100), tempo);
+                let nominal = this.state.inputAtual * Math.pow(1 + taxa, this.state.inputTempo);
                 Alert.alert('Resultado: ', 'Nominal: R$' + nominal.toFixed(2) + '\nDesconto: R$' + (nominal - this.state.inputAtual).toFixed(2));
 
             } else if (this.state.inputNominal != '' && this.state.inputAtual === '' && this.state.inputTaxa != '' && this.state.inputTempo != '') {
 
-                let taxa, tempo;
+                let taxa;
                 if (this.state.escTaxa != this.state.escTempo) {
-                    if (this.state.escTaxa === 'dia') {
+                    if (this.state.escTaxa === 'dia' && this.state.escTempo === 'mes') {
                         taxa = Math.pow(1 + (this.state.inputTaxa / 100), 30) - 1;
-                    } else if (this.state.escTaxa === 'ano') {
+                    } else if (this.state.escTaxa === 'ano' && this.state.escTempo === 'mes') {
                         taxa = Math.pow(1 + (this.state.inputTaxa / 100), 1 / 12) - 1;
+                    } else if (this.state.escTaxa === 'dia' && this.state.escTempo === 'ano') {
+                        taxa = Math.pow(1 + (this.state.inputTaxa / 100), 360) - 1;
+                    } else if (this.state.escTaxa === 'mes' && this.state.escTempo === 'ano') {
+                        taxa = Math.pow(1 + (this.state.inputTaxa / 100), 12) - 1;
+                    } else if (this.state.escTaxa === 'mes' && this.state.escTempo === 'dia') {
+                        taxa = Math.pow(1 + (this.state.inputTaxa / 100), 1 / 30) - 1;
+                    } else if (this.state.escTaxa === 'ano' && this.state.escTempo === 'dia') {
+                        taxa = Math.pow(1 + (this.state.inputTaxa / 100), 1 / 360) - 1;
                     } else {
-                        taxa = this.state.inputTaxa;
-                    }
-
-                    if (this.state.escTempo === 'dia') {
-                        tempo = this.state.inputTempo / 30;
-                    } else if (this.state.escTempo === 'ano') {
-                        tempo = this.state.inputTempo * 12;
-                    } else {
-                        tempo = this.state.inputTempo;
+                        taxa = this.state.inputTaxa / 100;
                     }
                 } else {
-                    taxa = this.state.inputTaxa;
-                    tempo = this.state.inputTempo;
+                    taxa = this.state.inputTaxa / 100;
                 }
 
-                let atual = this.state.inputNominal / Math.pow(1 + (taxa / 100), tempo);
+                let atual = this.state.inputNominal / Math.pow(1 + taxa, this.state.inputTempo);
                 Alert.alert('Resultado: ', 'Após desconto: R$' + atual.toFixed(2) + '\nDesconto: R$' + (this.state.inputNominal - atual).toFixed(2));
 
             } else if (this.state.inputNominal != '' && this.state.inputAtual != '' && this.state.inputTaxa === '' && this.state.inputTempo != '') {
@@ -273,29 +251,25 @@ export default class DescontoComposto extends Component {
 
             } else if (this.state.inputNominal != '' && this.state.inputAtual != '' && this.state.inputTaxa != '' && this.state.inputTempo === '') {
 
-                let taxa, tempo;
+                let tempo;
 
                 if (this.state.escTaxa != this.state.escTempo) {
-                    if (this.state.escTempo === 'dia' && this.state.escTaxa === 'mes') {
-                        taxa = this.state.inputTaxa / 30;
-                    } else if (this.state.escTempo === 'ano' && this.state.escTaxa === 'mes') {
-                        taxa = this.state.inputTaxa * 12;
-                    } else if (this.state.escTempo === 'mes' && this.state.escTaxa === 'dia') {
-                        taxa = this.state.inputTaxa * 30;
-                    } else if (this.state.escTempo === 'ano' && this.state.escTaxa === 'dia') {
-                        taxa = (this.state.inputTaxa * 12) * 30;
-                    } else if (this.state.escTempo === 'mes' && this.state.escTaxa === 'ano') {
-                        taxa = this.state.inputTaxa / 12;
-                    } else if (this.state.escTempo === 'dia' && this.state.escTaxa === 'ano') {
-                        taxa = (this.state.inputTaxa / 30) / 12;
-                    } else {
-                        taxa = this.state.inputTaxa;
+                    tempo = (Math.log10(nominal / atual) / Math.log10(1 + (this.state.inputTaxa / 100)));
+                    if (this.state.escTaxa === 'dia' && this.state.escTempo === 'mes') {
+                        tempo = tempo / 30;
+                    } else if (this.state.escTaxa === 'ano' && this.state.escTempo === 'mes') {
+                        tempo = tempo * 12;
+                    } else if (this.state.escTaxa === 'dia' && this.state.escTempo === 'ano') {
+                        tempo = tempo / 360;
+                    } else if (this.state.escTaxa === 'mes' && this.state.escTempo === 'ano') {
+                        tempo = tempo / 12;
+                    } else if (this.state.escTaxa === 'mes' && this.state.escTempo === 'dia') {
+                        tempo = tempo * 30;
+                    } else if (this.state.escTaxa === 'ano' && this.state.escTempo === 'dia') {
+                        tempo = tempo * 360;
                     }
-                    
-                    tempo = (Math.log10(nominal / atual) / Math.log10(1 + i));
                 } else {
-                    taxa = this.state.inputTaxa / 100;
-                    tempo = (Math.log10(nominal / atual) / Math.log10(1 + i));
+                    tempo = (Math.log10(nominal / atual) / Math.log10(1 + (this.state.inputTaxa / 100)));
                 }
 
                 Alert.alert('Resultado: ', 'Tempo: ' + tempo.toFixed(3));
