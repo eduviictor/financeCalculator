@@ -57,56 +57,54 @@ export default class JurosSimples extends Component {
 
     onSubmit = () => {
         if (this.state.inputMontante === '' && this.state.inputCapital != '' && this.state.inputTaxa != '' && this.state.inputTempo != '') {
-            let taxa, tempo;
+            let taxa;
             if (this.state.escTaxa != this.state.escTempo) {
-                if (this.state.escTaxa === 'dia') {
+                if (this.state.escTaxa === 'dia' && this.state.escTempo === 'mes') {
                     taxa = this.state.inputTaxa * 30;
-                } else if (this.state.escTaxa === 'ano') {
+                } else if (this.state.escTaxa === 'ano' && this.state.escTempo === 'mes') {
                     taxa = this.state.inputTaxa / 12;
+                } else if (this.state.escTaxa === 'dia' && this.state.escTempo === 'ano') {
+                    taxa = this.state.inputTaxa * 360;
+                } else if (this.state.escTaxa === 'mes' && this.state.escTempo === 'ano') {
+                    taxa = this.state.inputTaxa * 12;
+                } else if (this.state.escTaxa === 'mes' && this.state.escTempo === 'dia') {
+                    taxa = this.state.inputTaxa / 30;
+                } else if (this.state.escTaxa === 'ano' && this.state.escTempo === 'dia') {
+                    taxa = this.state.inputTaxa / 360;
                 } else {
                     taxa = this.state.inputTaxa;
                 }
 
-                if (this.state.escTempo === 'dia') {
-                    tempo = this.state.inputTempo / 30;
-                } else if (this.state.escTempo === 'ano') {
-                    tempo = this.state.inputTempo * 12;
-                } else {
-                    tempo = this.state.inputTempo;
-                }
             } else {
                 taxa = this.state.inputTaxa;
-                tempo = this.state.inputTempo;
             }
-
-            let montante = this.state.inputCapital * (1 + (taxa / 100) * tempo);
+            let montante = this.state.inputCapital * (1 + (taxa / 100) * this.state.inputTempo);
             Alert.alert('Resultado:', 'Montante: R$' + montante.toFixed(2) + '\nJuros: R$' + (montante - this.state.inputCapital).toFixed(2));
 
         } else if (this.state.inputMontante != '' && this.state.inputCapital === '' && this.state.inputTaxa != '' && this.state.inputTempo != '') {
 
             let taxa, tempo;
             if (this.state.escTaxa != this.state.escTempo) {
-                if (this.state.escTaxa === 'dia') {
+                if (this.state.escTaxa === 'dia' && this.state.escTempo === 'mes') {
                     taxa = this.state.inputTaxa * 30;
-                } else if (this.state.escTaxa === 'ano') {
+                } else if (this.state.escTaxa === 'ano' && this.state.escTempo === 'mes') {       
                     taxa = this.state.inputTaxa / 12;
+                } else if (this.state.escTaxa === 'dia' && this.state.escTempo === 'ano') {
+                    taxa = this.state.inputTaxa * 360;
+                } else if (this.state.escTaxa === 'mes' && this.state.escTempo === 'ano') {
+                    taxa = this.state.inputTaxa * 12;
+                } else if (this.state.escTaxa === 'mes' && this.state.escTempo === 'dia') {
+                    taxa = this.state.inputTaxa / 30;
+                } else if (this.state.escTaxa === 'ano' && this.state.escTempo === 'dia') {
+                    taxa = this.state.inputTaxa / 360;
                 } else {
                     taxa = this.state.inputTaxa;
                 }
-
-                if (this.state.escTempo === 'dia') {
-                    tempo = this.state.inputTempo / 30;
-                } else if (this.state.escTempo === 'ano') {
-                    tempo = this.state.inputTempo * 12;
-                } else {
-                    tempo = this.state.inputTempo;
-                }
             } else {
                 taxa = this.state.inputTaxa;
-                tempo = this.state.inputTempo;
             }
 
-            let capital = this.state.inputMontante / (1 + ((taxa / 100) * tempo));
+            let capital = this.state.inputMontante / (1 + ((taxa / 100) * this.state.inputTempo));
             Alert.alert('Resultado: ', 'Capital: R$' + capital.toFixed(2) + '\nJuros: R$' + (this.state.inputMontante - capital).toFixed(2));
 
         } else if (this.state.inputMontante != '' && this.state.inputCapital != '' && this.state.inputTaxa === '' && this.state.inputTempo != '') {
@@ -139,26 +137,24 @@ export default class JurosSimples extends Component {
 
         } else if (this.state.inputMontante != '' && this.state.inputCapital != '' && this.state.inputTaxa != '' && this.state.inputTempo === '') {
 
-            let taxa, tempo;
+            let tempo;
 
             if (this.state.escTaxa != this.state.escTempo) {
-                if (this.state.escTempo === 'dia' && this.state.escTaxa === 'mes') {
-                    taxa = this.state.inputTaxa / 30;
-                } else if (this.state.escTempo === 'ano' && this.state.escTaxa === 'mes') {
-                    taxa = this.state.inputTaxa * 12;
-                } else if (this.state.escTempo === 'mes' && this.state.escTaxa === 'dia') {
-                    taxa = this.state.inputTaxa * 30;
-                } else if (this.state.escTempo === 'ano' && this.state.escTaxa === 'dia') {
-                    taxa = (this.state.inputTaxa * 12) * 30;
-                } else if (this.state.escTempo === 'mes' && this.state.escTaxa === 'ano') {
-                    taxa = this.state.inputTaxa / 12;
-                } else if (this.state.escTempo === 'dia' && this.state.escTaxa === 'ano') {
-                    taxa = (this.state.inputTaxa / 30) / 12;
-                } else {
-                    taxa = this.state.inputTaxa;
+                tempo = (this.state.inputMontante - this.state.inputCapital) / (this.state.inputCapital * (this.state.inputTaxa / 100));
+                
+                if (this.state.escTaxa === 'dia' && this.state.escTempo === 'mes') {
+                    tempo = tempo / 30;
+                } else if (this.state.escTaxa === 'ano' && this.state.escTempo === 'mes') {
+                    tempo = tempo * 12;
+                } else if (this.state.escTaxa === 'dia' && this.state.escTempo === 'ano') {
+                    tempo = tempo / 360;
+                } else if (this.state.escTaxa === 'mes' && this.state.escTempo === 'ano') {
+                    tempo = tempo / 12;
+                } else if (this.state.escTaxa === 'mes' && this.state.escTempo === 'dia') {
+                    tempo = tempo * 30;
+                } else if (this.state.escTaxa === 'ano' && this.state.escTempo === 'dia') {
+                    tempo = tempo * 360;
                 }
-
-                tempo = (this.state.inputMontante - this.state.inputCapital) / (this.state.inputCapital * (taxa / 100));
             } else {
                 tempo = (this.state.inputMontante - this.state.inputCapital) / (this.state.inputCapital * (this.state.inputTaxa / 100));
             }

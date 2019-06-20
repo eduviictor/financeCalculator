@@ -145,35 +145,45 @@ export default class DescontoComposto extends Component {
 
             } else if (this.state.inputNominal != '' && this.state.inputAtual != '' && this.state.inputTaxa != '' && this.state.inputTempo === '') {
 
-                let taxa, tempo;
+                let taxa, tempo, desconto;
+                desconto = this.state.inputNominal - this.state.inputAtual;
+                tempo = Math.log10(1 - (desconto / this.state.inputNominal)) / Math.log10(1 - this.state.inputTaxa);
 
                 if (this.state.escTaxa != this.state.escTempo) {
+                    if(tempo > 0){
+                        tempo = Math.round(tempo);
+                    }
                     if (this.state.escTempo === 'dia' && this.state.escTaxa === 'mes') {
-                        taxa = Math.pow(1 + (this.state.inputTaxa / 100), 1 / 30) - 1;
+                        tempo = tempo * 30;
+                        // taxa = Math.pow(1 + (this.state.inputTaxa / 100), 1 / 30) - 1;
                     } else if (this.state.escTempo === 'ano' && this.state.escTaxa === 'mes') {
-                        taxa = Math.pow(1 + (this.state.inputTaxa / 100), 12) - 1;
+                        tempo = tempo / 12;
+                        // taxa = Math.pow(1 + (this.state.inputTaxa / 100), 12) - 1;
                     } else if (this.state.escTempo === 'mes' && this.state.escTaxa === 'dia') {
-                        taxa = Math.pow(1 + (this.state.inputTaxa / 100), 30) - 1;
+                        tempo = tempo / 30;
+                        // taxa = Math.pow(1 + (this.state.inputTaxa / 100), 30) - 1;
                     } else if (this.state.escTempo === 'ano' && this.state.escTaxa === 'dia') {
-                        taxa = Math.pow(1 + (this.state.inputTaxa / 100), 360) - 1;
+                        tempo = tempo / 360;
+                        // taxa = Math.pow(1 + (this.state.inputTaxa / 100), 360) - 1;
                     } else if (this.state.escTempo === 'mes' && this.state.escTaxa === 'ano') {
-                        taxa = Math.pow(1 + (this.state.inputTaxa / 100), 1 / 12) - 1;
+                        tempo = tempo * 12;
+                        // taxa = Math.pow(1 + (this.state.inputTaxa / 100), 1 / 12) - 1;
                     } else if (this.state.escTempo === 'dia' && this.state.escTaxa === 'ano') {
-                        taxa = Math.pow(1 + (this.state.inputTaxa / 100), 1 / 360) - 1;
-                    } else {
-                        taxa = this.state.inputTaxa;
+                        tempo = tempo * 360;
+                        // taxa = Math.pow(1 + (this.state.inputTaxa / 100), 1 / 360) - 1;
                     }
                     
-                    let desconto = this.state.inputNominal - this.state.inputAtual;
-                    tempo = desconto / (this.state.inputNominal * taxa);
-                    // tempo = Math.log(this.state.inputAtual / this.state.inputNominal) / Math.log(1 - (taxa / 100));
+                    // let desconto = this.state.inputNominal - this.state.inputAtual;
                 } else {
                     taxa = this.state.inputTaxa / 100;
 
                     let desconto = this.state.inputNominal - this.state.inputAtual;
                     tempo = desconto / (this.state.inputNominal * taxa);
-                    // tempo = Math.log(this.state.inputAtual / this.state.inputNominal) / Math.log(1 - taxa);
                 }
+
+                // if(tempo > 0){
+                //     tempo = Math.round(tempo);
+                // }
 
                 Alert.alert('Resultado: ', 'Tempo: ' + tempo.toFixed(3));
             } else {
@@ -281,11 +291,11 @@ export default class DescontoComposto extends Component {
                     } else {
                         taxa = this.state.inputTaxa;
                     }
-
-                    tempo = ((this.state.inputNominal / this.state.inputAtual) - 1) / (taxa / 100);
+                    
+                    tempo = (Math.log10(nominal / atual) / Math.log10(1 + i));
                 } else {
                     taxa = this.state.inputTaxa / 100;
-                    tempo = ((this.state.inputNominal / this.state.inputAtual) - 1) / taxa;
+                    tempo = (Math.log10(nominal / atual) / Math.log10(1 + i));
                 }
 
                 Alert.alert('Resultado: ', 'Tempo: ' + tempo.toFixed(3));

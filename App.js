@@ -13,7 +13,7 @@ import DescontoComposto from './src/components/Desconto/DescontoComposto/Descont
 
 class App extends Component {
 
-  render() {
+  render() {                
     return (
       <View style={styles.container}>
         {/* <Main {...this.props} /> */}
@@ -30,7 +30,7 @@ const AppNavigator = createStackNavigator({
   DescontoSimples,
   DescontoComposto
 },{
-  initialRouteName: "DescontoSimples",
+  initialRouteName: "Main",
 }
 );
 

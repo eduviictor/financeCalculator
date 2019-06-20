@@ -60,11 +60,11 @@ export default class JurosCompostos extends Component {
             let taxa, tempo;
             if(this.state.escTaxa != this.state.escTempo){
                 if(this.state.escTaxa === 'dia'){
-                    taxa = this.state.inputTaxa * 30;
+                    taxa = Math.pow(1 + (this.state.inputTaxa / 100), 30) - 1;
                 }else if(this.state.escTaxa === 'ano'){
-                    taxa = this.state.inputTaxa / 12;
+                    taxa = Math.pow(1 + (this.state.inputTaxa / 100), 1 / 12) - 1;
                 }else{
-                    taxa = this.state.inputTaxa;
+                    taxa = this.state.inputTaxa / 100;
                 }
 
                 if(this.state.escTempo === 'dia'){
@@ -75,10 +75,10 @@ export default class JurosCompostos extends Component {
                     tempo = this.state.inputTempo;
                 }
             }else{
-                taxa = this.state.inputTaxa;
+                taxa = this.state.inputTaxa / 100;
                 tempo = this.state.inputTempo;
             }
-            let base = 1 + (taxa/100);
+            let base = 1 + taxa;
             let montante = this.state.inputCapital * Math.pow(base, tempo);
             Alert.alert('Resultado:', 'Montante: R$' + montante.toFixed(2) + '\nJuros: R$' + (montante - this.state.inputCapital).toFixed(2));
 
@@ -87,11 +87,11 @@ export default class JurosCompostos extends Component {
             let taxa, tempo;
             if(this.state.escTaxa != this.state.escTempo){
                 if(this.state.escTaxa === 'dia'){
-                    taxa = this.state.inputTaxa * 30;
+                    taxa = Math.pow(1 + (this.state.inputTaxa / 100), 30) - 1;
                 }else if(this.state.escTaxa === 'ano'){
-                    taxa = this.state.inputTaxa / 12;
+                    taxa = Math.pow(1 + (this.state.inputTaxa / 100), 1 / 12) - 1;
                 }else{
-                    taxa = this.state.inputTaxa;
+                    taxa = this.state.inputTaxa / 100;
                 }
 
                 if(this.state.escTempo === 'dia'){
@@ -102,11 +102,11 @@ export default class JurosCompostos extends Component {
                     tempo = this.state.inputTempo;
                 }
             }else{
-                taxa = this.state.inputTaxa;
+                taxa = this.state.inputTaxa / 100;
                 tempo = this.state.inputTempo;
             }
             
-            let base = 1 + (taxa/100);
+            let base = 1 + taxa;
             let capital = this.state.inputMontante/Math.pow(base, tempo);
             Alert.alert('Resultado: ', 'Capital: R$' + capital.toFixed(2) + '\nJuros: R$' + (this.state.inputMontante - capital).toFixed(2));
 
