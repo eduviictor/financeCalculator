@@ -164,7 +164,7 @@ export default class JurosSimples extends Component {
             let juros = this.state.inputMontante - this.state.inputCapital;
             Alert.alert('Resultado: ', 'Juros: ' + juros.toFixed(2));
         } else {
-            Alert.alert("Deixe em branco o que deseja calcular!");
+            Alert.alert("Deixe no máximo um campo em vazio!");
         }
 
     }

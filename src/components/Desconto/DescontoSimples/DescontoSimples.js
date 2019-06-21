@@ -171,7 +171,7 @@ export default class DescontoSimples extends Component {
                 let desconto = this.state.inputNominal - this.state.inputAtual;
                 Alert.alert('Resultado: ', 'Desconto: ' + desconto.toFixed(2));
             } else {
-                Alert.alert("Deixe em branco o que deseja calcular!");
+                Alert.alert("Deixe no máximo um campo em vazio!");
             }
         } else if (this.state.escDesconto === 'racional') {
             if (this.state.inputNominal === '' && this.state.inputAtual != '' && this.state.inputTaxa != '' && this.state.inputTempo != '') {
@@ -282,7 +282,7 @@ export default class DescontoSimples extends Component {
                 let desconto = this.state.inputNominal - this.state.inputAtual;
                 Alert.alert('Resultado: ', 'Desconto: ' + desconto.toFixed(2));
             } else {
-                Alert.alert("Deixe em branco o que deseja calcular!");
+                Alert.alert("Deixe no máximo um campo em vazio!");
             }
         }
 
