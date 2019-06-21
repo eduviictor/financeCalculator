@@ -167,6 +167,9 @@ export default class DescontoSimples extends Component {
                 }
 
                 Alert.alert('Resultado: ', 'Tempo: ' + tempo.toFixed(3));
+            } else if (this.state.inputMontante != '' && this.state.inputCapital != '' && this.state.inputTaxa != '' && this.state.inputTempo != '') {
+                let desconto = this.state.inputNominal - this.state.inputAtual;
+                Alert.alert('Resultado: ', 'Desconto: ' + desconto.toFixed(2));
             } else {
                 Alert.alert("Deixe em branco o que deseja calcular!");
             }
@@ -275,6 +278,9 @@ export default class DescontoSimples extends Component {
                 }
 
                 Alert.alert('Resultado: ', 'Tempo: ' + tempo.toFixed(3));
+            } else if (this.state.inputMontante != '' && this.state.inputCapital != '' && this.state.inputTaxa != '' && this.state.inputTempo != '') {
+                let desconto = this.state.inputNominal - this.state.inputAtual;
+                Alert.alert('Resultado: ', 'Desconto: ' + desconto.toFixed(2));
             } else {
                 Alert.alert("Deixe em branco o que deseja calcular!");
             }

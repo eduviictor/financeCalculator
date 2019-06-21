@@ -166,6 +166,9 @@ export default class DescontoComposto extends Component {
                 }
 
                 Alert.alert('Resultado: ', 'Tempo: ' + tempo.toFixed(3));
+            } else if (this.state.inputMontante != '' && this.state.inputCapital != '' && this.state.inputTaxa != '' && this.state.inputTempo != '') {
+                let desconto = this.state.inputNominal - this.state.inputAtual;
+                Alert.alert('Resultado: ', 'Desconto: ' + desconto.toFixed(2));
             } else {
                 Alert.alert("Deixe em branco o que deseja calcular!");
             }
@@ -254,7 +257,7 @@ export default class DescontoComposto extends Component {
                 let tempo;
 
                 if (this.state.escTaxa != this.state.escTempo) {
-                    tempo = (Math.log10(nominal / atual) / Math.log10(1 + (this.state.inputTaxa / 100)));
+                    tempo = (Math.log10(this.state.inputNominal / this.state.inputAtual) / Math.log10(1 + (this.state.inputTaxa / 100)));
                     if (this.state.escTaxa === 'dia' && this.state.escTempo === 'mes') {
                         tempo = tempo / 30;
                     } else if (this.state.escTaxa === 'ano' && this.state.escTempo === 'mes') {
@@ -269,10 +272,13 @@ export default class DescontoComposto extends Component {
                         tempo = tempo * 360;
                     }
                 } else {
-                    tempo = (Math.log10(nominal / atual) / Math.log10(1 + (this.state.inputTaxa / 100)));
+                    tempo = (Math.log10(this.state.inputNominal / this.state.inputAtual) / Math.log10(1 + (this.state.inputTaxa / 100)));
                 }
 
                 Alert.alert('Resultado: ', 'Tempo: ' + tempo.toFixed(3));
+            } else if (this.state.inputMontante != '' && this.state.inputCapital != '' && this.state.inputTaxa != '' && this.state.inputTempo != '') {
+                let desconto = this.state.inputNominal - this.state.inputAtual;
+                Alert.alert('Resultado: ', 'Desconto: ' + desconto.toFixed(2));
             } else {
                 Alert.alert("Deixe em branco o que deseja calcular!");
             }

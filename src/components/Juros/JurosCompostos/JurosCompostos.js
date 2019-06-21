@@ -166,7 +166,10 @@ export default class JurosCompostos extends Component {
             }
 
             Alert.alert('Resultado: ', 'Tempo: ' + tempo.toFixed(3));
-        } else {
+        } else if (this.state.inputMontante != '' && this.state.inputCapital != '' && this.state.inputTaxa != '' && this.state.inputTempo != '') {
+            let juros = this.state.inputMontante - this.state.inputCapital;
+            Alert.alert('Resultado: ', 'Juros: ' + juros.toFixed(2));
+        }  else {
             Alert.alert("Deixe em branco o que deseja calcular!");
         }
 
