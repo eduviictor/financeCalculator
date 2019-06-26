@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Text, View, StyleSheet, TextInput, Picker, TouchableOpacity, Alert } from 'react-native';
+import db from '../../../services/db';
 
 export default class DescontoComposto extends Component {
 
@@ -25,11 +26,24 @@ export default class DescontoComposto extends Component {
     }
 
     componentDidMount() {
-        this.setState({
-            escTaxa: 'dia',
-            escTempo: 'dia',
-            escDesconto: 'comercial',
-        })
+        if(this.props.navigation.state.params !== undefined){
+            const item = this.props.navigation.state.params;
+            this.setState({
+                inputNominal: item.nominal != null ? item.nominal.toString() : '',
+                inputTaxa: item.taxa != null ? item.taxa.toString() : '',
+                escTaxa: item.escTaxa,
+                inputTempo: item.tempo != null ? item.tempo.toString() : '',
+                escTempo: item.escTempo,
+                inputAtual: item.atual != null ? item.atual.toString() : '',
+                escDesconto: item.tipo.endsWith('C') === true ? 'comercial' : 'racional'
+            })
+        }else{
+            this.setState({
+                escTaxa: 'dia',
+                escTempo: 'dia',
+                escDesconto: 'comercial'
+            })
+        }
     }
 
     onChangeInput = (input, esc) => {
@@ -87,6 +101,12 @@ export default class DescontoComposto extends Component {
                 let nominal = this.state.inputAtual / Math.pow((1 - taxa), this.state.inputTempo);
                 Alert.alert('Resultado: ', 'Nominal: R$' + nominal.toFixed(2) + '\nDesconto: R$' + (nominal - this.state.inputAtual).toFixed(2));
 
+                db.transaction((tx) => {
+                    tx.executeSql(`INSERT INTO desconto(nominal, taxa, escTaxa, tempo, escTempo, atual, tipo) VALUES(${this.state.inputNominal != '' ? this.state.inputNominal : null}, ${this.state.inputTaxa != '' ? this.state.inputTaxa : null}, '${this.state.escTaxa}', ${this.state.inputTempo != '' ? this.state.inputTempo : null}, '${this.state.escTempo}', ${this.state.inputAtual != '' ? this.state.inputAtual : null}, 'DCC');`, [], (tx, results) => {
+                        console.log(results);
+                    });
+                });
+
             } else if (this.state.inputNominal != '' && this.state.inputAtual === '' && this.state.inputTaxa != '' && this.state.inputTempo != '') {
 
                 let taxa;
@@ -112,6 +132,12 @@ export default class DescontoComposto extends Component {
 
                 let atual = this.state.inputNominal * Math.pow((1 - taxa), this.state.inputTempo);
                 Alert.alert('Resultado: ', 'Após desconto: R$' + atual.toFixed(2) + '\nDesconto: R$' + (this.state.inputNominal - atual).toFixed(2));
+
+                db.transaction((tx) => {
+                    tx.executeSql(`INSERT INTO desconto(nominal, taxa, escTaxa, tempo, escTempo, atual, tipo) VALUES(${this.state.inputNominal != '' ? this.state.inputNominal : null}, ${this.state.inputTaxa != '' ? this.state.inputTaxa : null}, '${this.state.escTaxa}', ${this.state.inputTempo != '' ? this.state.inputTempo : null}, '${this.state.escTempo}', ${this.state.inputAtual != '' ? this.state.inputAtual : null}, 'DCC');`, [], (tx, results) => {
+                        console.log(results);
+                    });
+                });
 
             } else if (this.state.inputNominal != '' && this.state.inputAtual != '' && this.state.inputTaxa === '' && this.state.inputTempo != '') {
 
@@ -141,6 +167,12 @@ export default class DescontoComposto extends Component {
                 }
                 Alert.alert('Resultado: ', 'Taxa: ' + (taxa * 100).toFixed(3) + '%');
 
+                db.transaction((tx) => {
+                    tx.executeSql(`INSERT INTO desconto(nominal, taxa, escTaxa, tempo, escTempo, atual, tipo) VALUES(${this.state.inputNominal != '' ? this.state.inputNominal : null}, ${this.state.inputTaxa != '' ? this.state.inputTaxa : null}, '${this.state.escTaxa}', ${this.state.inputTempo != '' ? this.state.inputTempo : null}, '${this.state.escTempo}', ${this.state.inputAtual != '' ? this.state.inputAtual : null}, 'DCC');`, [], (tx, results) => {
+                        console.log(results);
+                    });
+                });
+
             } else if (this.state.inputNominal != '' && this.state.inputAtual != '' && this.state.inputTaxa != '' && this.state.inputTempo === '') {
 
                 let tempo, desconto;
@@ -166,9 +198,22 @@ export default class DescontoComposto extends Component {
                 }
 
                 Alert.alert('Resultado: ', 'Tempo: ' + tempo.toFixed(3));
+
+                db.transaction((tx) => {
+                    tx.executeSql(`INSERT INTO desconto(nominal, taxa, escTaxa, tempo, escTempo, atual, tipo) VALUES(${this.state.inputNominal != '' ? this.state.inputNominal : null}, ${this.state.inputTaxa != '' ? this.state.inputTaxa : null}, '${this.state.escTaxa}', ${this.state.inputTempo != '' ? this.state.inputTempo : null}, '${this.state.escTempo}', ${this.state.inputAtual != '' ? this.state.inputAtual : null}, 'DCC');`, [], (tx, results) => {
+                        console.log(results);
+                    });
+                });
+
             } else if (this.state.inputMontante != '' && this.state.inputCapital != '' && this.state.inputTaxa != '' && this.state.inputTempo != '') {
                 let desconto = this.state.inputNominal - this.state.inputAtual;
                 Alert.alert('Resultado: ', 'Desconto: ' + desconto.toFixed(2));
+
+                db.transaction((tx) => {
+                    tx.executeSql(`INSERT INTO desconto(nominal, taxa, escTaxa, tempo, escTempo, atual, tipo) VALUES(${this.state.inputNominal != '' ? this.state.inputNominal : null}, ${this.state.inputTaxa != '' ? this.state.inputTaxa : null}, '${this.state.escTaxa}', ${this.state.inputTempo != '' ? this.state.inputTempo : null}, '${this.state.escTempo}', ${this.state.inputAtual != '' ? this.state.inputAtual : null}, 'DCC');`, [], (tx, results) => {
+                        console.log(results);
+                    });
+                });
             } else {
                 Alert.alert("Deixe no máximo um campo em vazio!");
             }
@@ -198,6 +243,12 @@ export default class DescontoComposto extends Component {
                 let nominal = this.state.inputAtual * Math.pow(1 + taxa, this.state.inputTempo);
                 Alert.alert('Resultado: ', 'Nominal: R$' + nominal.toFixed(2) + '\nDesconto: R$' + (nominal - this.state.inputAtual).toFixed(2));
 
+                db.transaction((tx) => {
+                    tx.executeSql(`INSERT INTO desconto(nominal, taxa, escTaxa, tempo, escTempo, atual, tipo) VALUES(${this.state.inputNominal != '' ? this.state.inputNominal : null}, ${this.state.inputTaxa != '' ? this.state.inputTaxa : null}, '${this.state.escTaxa}', ${this.state.inputTempo != '' ? this.state.inputTempo : null}, '${this.state.escTempo}', ${this.state.inputAtual != '' ? this.state.inputAtual : null}, 'DCR');`, [], (tx, results) => {
+                        console.log(results);
+                    });
+                });
+
             } else if (this.state.inputNominal != '' && this.state.inputAtual === '' && this.state.inputTaxa != '' && this.state.inputTempo != '') {
 
                 let taxa;
@@ -223,6 +274,12 @@ export default class DescontoComposto extends Component {
 
                 let atual = this.state.inputNominal / Math.pow(1 + taxa, this.state.inputTempo);
                 Alert.alert('Resultado: ', 'Após desconto: R$' + atual.toFixed(2) + '\nDesconto: R$' + (this.state.inputNominal - atual).toFixed(2));
+
+                db.transaction((tx) => {
+                    tx.executeSql(`INSERT INTO desconto(nominal, taxa, escTaxa, tempo, escTempo, atual, tipo) VALUES(${this.state.inputNominal != '' ? this.state.inputNominal : null}, ${this.state.inputTaxa != '' ? this.state.inputTaxa : null}, '${this.state.escTaxa}', ${this.state.inputTempo != '' ? this.state.inputTempo : null}, '${this.state.escTempo}', ${this.state.inputAtual != '' ? this.state.inputAtual : null}, 'DCR');`, [], (tx, results) => {
+                        console.log(results);
+                    });
+                });
 
             } else if (this.state.inputNominal != '' && this.state.inputAtual != '' && this.state.inputTaxa === '' && this.state.inputTempo != '') {
 
@@ -252,6 +309,12 @@ export default class DescontoComposto extends Component {
                 }
                 Alert.alert('Resultado: ', 'Taxa: ' + (taxa * 100).toFixed(3) + '%');
 
+                db.transaction((tx) => {
+                    tx.executeSql(`INSERT INTO desconto(nominal, taxa, escTaxa, tempo, escTempo, atual, tipo) VALUES(${this.state.inputNominal != '' ? this.state.inputNominal : null}, ${this.state.inputTaxa != '' ? this.state.inputTaxa : null}, '${this.state.escTaxa}', ${this.state.inputTempo != '' ? this.state.inputTempo : null}, '${this.state.escTempo}', ${this.state.inputAtual != '' ? this.state.inputAtual : null}, 'DCR');`, [], (tx, results) => {
+                        console.log(results);
+                    });
+                });
+
             } else if (this.state.inputNominal != '' && this.state.inputAtual != '' && this.state.inputTaxa != '' && this.state.inputTempo === '') {
 
                 let tempo;
@@ -276,9 +339,21 @@ export default class DescontoComposto extends Component {
                 }
 
                 Alert.alert('Resultado: ', 'Tempo: ' + tempo.toFixed(3));
+
+                db.transaction((tx) => {
+                    tx.executeSql(`INSERT INTO desconto(nominal, taxa, escTaxa, tempo, escTempo, atual, tipo) VALUES(${this.state.inputNominal != '' ? this.state.inputNominal : null}, ${this.state.inputTaxa != '' ? this.state.inputTaxa : null}, '${this.state.escTaxa}', ${this.state.inputTempo != '' ? this.state.inputTempo : null}, '${this.state.escTempo}', ${this.state.inputAtual != '' ? this.state.inputAtual : null}, 'DCR');`, [], (tx, results) => {
+                        console.log(results);
+                    });
+                });
             } else if (this.state.inputMontante != '' && this.state.inputCapital != '' && this.state.inputTaxa != '' && this.state.inputTempo != '') {
                 let desconto = this.state.inputNominal - this.state.inputAtual;
                 Alert.alert('Resultado: ', 'Desconto: ' + desconto.toFixed(2));
+
+                db.transaction((tx) => {
+                    tx.executeSql(`INSERT INTO desconto(nominal, taxa, escTaxa, tempo, escTempo, atual, tipo) VALUES(${this.state.inputNominal != '' ? this.state.inputNominal : null}, ${this.state.inputTaxa != '' ? this.state.inputTaxa : null}, '${this.state.escTaxa}', ${this.state.inputTempo != '' ? this.state.inputTempo : null}, '${this.state.escTempo}', ${this.state.inputAtual != '' ? this.state.inputAtual : null}, 'DCR');`, [], (tx, results) => {
+                        console.log(results);
+                    });
+                });
             } else {
                 Alert.alert("Deixe no máximo um campo em vazio!");
             }
@@ -305,6 +380,7 @@ export default class DescontoComposto extends Component {
                         placeholder='Nominal (N)'
                         style={styles.inputNominal}
                         keyboardType='numeric'
+                        value={this.state.inputNominal}
                         onChangeText={(text) => this.onChangeInput(text, 'nominal')}
                     />
                 </View>
@@ -314,6 +390,7 @@ export default class DescontoComposto extends Component {
                         placeholder='Taxa (i)'
                         style={styles.inputTaxa}
                         keyboardType='numeric'
+                        value={this.state.inputTaxa}
                         onChangeText={(text) => this.onChangeInput(text, 'taxa')}
                     />
                     <Picker
@@ -331,6 +408,7 @@ export default class DescontoComposto extends Component {
                         placeholder='Tempo (t)'
                         style={styles.inputTempo}
                         keyboardType='numeric'
+                        value={this.state.inputTempo}
                         onChangeText={(text) => this.onChangeInput(text, 'tempo')}
                     />
 
@@ -349,6 +427,7 @@ export default class DescontoComposto extends Component {
                         placeholder='Após desconto (A)'
                         style={styles.inputAtual}
                         keyboardType='numeric'
+                        value={this.state.inputAtual}
                         onChangeText={(text) => this.onChangeInput(text, 'atual')}
                     />
                 </View>
