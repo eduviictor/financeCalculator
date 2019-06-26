@@ -16,7 +16,6 @@ export default class JurosSimples extends Component {
     componentDidMount() {
         if(this.props.navigation.state.params !== undefined){
             const item = this.props.navigation.state.params;
-            // console.log('eita', item);
             this.setState({
                 inputCapital: item.capital != null ? item.capital.toString() : '',
                 inputTaxa: item.taxa != null ? item.taxa.toString() : '',
@@ -25,7 +24,6 @@ export default class JurosSimples extends Component {
                 escTempo: item.escTempo,
                 inputMontante: item.montante != null ? item.montante.toString() : ''
             })
-            console.log('state', this.state);
         }else{
             this.setState({
                 escTaxa: 'dia',

@@ -33,9 +33,23 @@ export default class Historico extends Component {
             //     console.log(results)
             // });
             // tx.executeSql("ALTER TABLE juros AUTOINCREMENT = 1", [], () => {});
-            // tx.executeSql("CREATE TABLE if not exists juros(id integer primary key autoincrement, capital real, taxa real, escTaxa text, tempo real, escTempo, montante real, tipo text)", [], (tx, results) => {
+            // tx.executeSql("CREATE TABLE if not exists desconto(id integer primary key autoincrement, nominal real, taxa real, escTaxa text, tempo real, escTempo, atual real, tipo text)", [], (tx, results) => {
             //     console.log('teste', results);
             // });
+
+            tx.executeSql("SELECT * FROM desconto", [], (tx, results) => {
+                let itens = [];
+
+				for (let i = 0; i < results.rows.length; i++) {
+                    // console.log('teste', results.rows.item(i).capital);
+					itens.push({
+						...results.rows.item(i),
+					});
+                };
+				this.setState({
+                    desconto: itens
+                });
+            });
             
 			tx.executeSql("SELECT * FROM juros", [], (tx, results) => {
                 let itens = [];
@@ -71,9 +85,9 @@ export default class Historico extends Component {
             this.props.navigation.push('JurosSimples', item);
         } else if (item.tipo === 'JC'){
             this.props.navigation.push('JurosCompostos', item);
-        } else if (item.tipo === 'DS'){
+        } else if (item.tipo === 'DSC' || item.tipo === 'DSR'){
             this.props.navigation.push('DescontoSimples', item);
-        } else if (item.tipo === 'DC'){
+        } else if (item.tipo === 'DCC' || item.tipo === 'DCR'){
             this.props.navigation.push('DescontoComposto', item);
         }
     }
@@ -88,7 +102,7 @@ export default class Historico extends Component {
         return (
             <View>
                 <FlatList 
-                    data={this.state.juros}
+                    data={this.state.desconto}
                     keyExtractor={item => item.id.toString()}
                     renderItem={this.renderItem}
                     contentContainerStyle={styles.list} 
