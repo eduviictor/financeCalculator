@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, TextInput, Picker, TouchableOpacity, KeyboardAvoidingView, Alert } from 'react-native';
+import db from '../../../services/db';
 
 export default class JurosCompostos extends Component {
 
@@ -13,10 +14,24 @@ export default class JurosCompostos extends Component {
     }
 
     componentDidMount(){
-        this.setState({
-            escTaxa: 'dia',
-            escTempo: 'dia'
-        })
+        if(this.props.navigation.state.params !== undefined){
+            const item = this.props.navigation.state.params;
+            // console.log('eita', item);
+            this.setState({
+                inputCapital: item.capital != null ? item.capital.toString() : '',
+                inputTaxa: item.taxa != null ? item.taxa.toString() : '',
+                escTaxa: item.escTaxa,
+                inputTempo: item.tempo != null ? item.tempo.toString() : '',
+                escTempo: item.escTempo,
+                inputMontante: item.montante != null ? item.montante.toString() : ''
+            })
+            console.log('state', this.state);
+        }else{
+            this.setState({
+                escTaxa: 'dia',
+                escTempo: 'dia'
+            })
+        }
     }
 
     static navigationOptions = {
@@ -80,6 +95,12 @@ export default class JurosCompostos extends Component {
             let base = 1 + taxa;
             let montante = this.state.inputCapital * Math.pow(base, this.state.inputTempo);
             Alert.alert('Resultado:', 'Montante: R$' + montante.toFixed(2) + '\nJuros: R$' + (montante - this.state.inputCapital).toFixed(2));
+            
+            db.transaction((tx) => {
+                tx.executeSql(`INSERT INTO juros(capital, taxa, escTaxa, tempo, escTempo, montante, tipo) VALUES(${this.state.inputCapital != '' ? this.state.inputCapital : null}, ${this.state.inputTaxa != '' ? this.state.inputTaxa : null}, '${this.state.escTaxa}', ${this.state.inputTempo != '' ? this.state.inputTempo : null}, '${this.state.escTempo}', ${this.state.inputMontante != '' ? this.state.inputMontante : null}, 'JC');`, [], (tx, results) => {
+                    console.log(results);
+                });
+            });
 
         }else if(this.state.inputMontante != '' && this.state.inputCapital === '' && this.state.inputTaxa != '' && this.state.inputTempo != ''){
 
@@ -107,6 +128,12 @@ export default class JurosCompostos extends Component {
             let base = 1 + taxa;
             let capital = this.state.inputMontante/Math.pow(base, this.state.inputTempo);
             Alert.alert('Resultado: ', 'Capital: R$' + capital.toFixed(2) + '\nJuros: R$' + (this.state.inputMontante - capital).toFixed(2));
+
+            db.transaction((tx) => {
+                tx.executeSql(`INSERT INTO juros(capital, taxa, escTaxa, tempo, escTempo, montante, tipo) VALUES(${this.state.inputCapital != '' ? this.state.inputCapital : null}, ${this.state.inputTaxa != '' ? this.state.inputTaxa : null}, '${this.state.escTaxa}', ${this.state.inputTempo != '' ? this.state.inputTempo : null}, '${this.state.escTempo}', ${this.state.inputMontante != '' ? this.state.inputMontante : null}, 'JC');`, [], (tx, results) => {
+                    console.log(results);
+                });
+            });
 
         }else if(this.state.inputMontante != '' && this.state.inputCapital != '' && this.state.inputTaxa === '' && this.state.inputTempo != ''){
 
@@ -138,6 +165,12 @@ export default class JurosCompostos extends Component {
 
             Alert.alert('Resultado: ', 'Taxa: ' + (taxa * 100).toFixed(3) + '%');
 
+            db.transaction((tx) => {
+                tx.executeSql(`INSERT INTO juros(capital, taxa, escTaxa, tempo, escTempo, montante, tipo) VALUES(${this.state.inputCapital != '' ? this.state.inputCapital : null}, ${this.state.inputTaxa != '' ? this.state.inputTaxa : null}, '${this.state.escTaxa}', ${this.state.inputTempo != '' ? this.state.inputTempo : null}, '${this.state.escTempo}', ${this.state.inputMontante != '' ? this.state.inputMontante : null}, 'JC');`, [], (tx, results) => {
+                    console.log(results);
+                });
+            });
+
         }else if(this.state.inputMontante != '' && this.state.inputCapital != '' && this.state.inputTaxa != '' && this.state.inputTempo === ''){
 
             let tempo;
@@ -166,13 +199,24 @@ export default class JurosCompostos extends Component {
             }
 
             Alert.alert('Resultado: ', 'Tempo: ' + tempo.toFixed(3));
+
+            db.transaction((tx) => {
+                tx.executeSql(`INSERT INTO juros(capital, taxa, escTaxa, tempo, escTempo, montante, tipo) VALUES(${this.state.inputCapital != '' ? this.state.inputCapital : null}, ${this.state.inputTaxa != '' ? this.state.inputTaxa : null}, '${this.state.escTaxa}', ${this.state.inputTempo != '' ? this.state.inputTempo : null}, '${this.state.escTempo}', ${this.state.inputMontante != '' ? this.state.inputMontante : null}, 'JC');`, [], (tx, results) => {
+                    console.log(results);
+                });
+            });
         } else if (this.state.inputMontante != '' && this.state.inputCapital != '' && this.state.inputTaxa != '' && this.state.inputTempo != '') {
             let juros = this.state.inputMontante - this.state.inputCapital;
             Alert.alert('Resultado: ', 'Juros: ' + juros.toFixed(2));
+
+            db.transaction((tx) => {
+                tx.executeSql(`INSERT INTO juros(capital, taxa, escTaxa, tempo, escTempo, montante, tipo) VALUES(${this.state.inputCapital != '' ? this.state.inputCapital : null}, ${this.state.inputTaxa != '' ? this.state.inputTaxa : null}, '${this.state.escTaxa}', ${this.state.inputTempo != '' ? this.state.inputTempo : null}, '${this.state.escTempo}', ${this.state.inputMontante != '' ? this.state.inputMontante : null}, 'JC');`, [], (tx, results) => {
+                    console.log(results);
+                });
+            });
         }  else {
             Alert.alert("Deixe no máximo um campo em vazio!");
         }
-
     }
 
     render() {
@@ -185,6 +229,7 @@ export default class JurosCompostos extends Component {
                         placeholder='Capital (C)'
                         style={styles.inputCapital}
                         keyboardType='numeric'
+                        value={this.state.inputCapital}
                         onChangeText={(text) => this.onChangeInput(text, 'capital')}
                         />
                     </View>
@@ -194,6 +239,7 @@ export default class JurosCompostos extends Component {
                         placeholder='Taxa (i)'
                         style={styles.inputTaxa}
                         keyboardType='numeric'
+                        value={this.state.inputTaxa}
                         onChangeText={(text) => this.onChangeInput(text, 'taxa')}
                         />
                         <Picker
@@ -211,6 +257,7 @@ export default class JurosCompostos extends Component {
                         placeholder='Tempo (t)'
                         style={styles.inputTempo}
                         keyboardType='numeric'
+                        value={this.state.inputTempo}
                         onChangeText={(text) => this.onChangeInput(text, 'tempo')}
                         />
                         
@@ -229,6 +276,7 @@ export default class JurosCompostos extends Component {
                         placeholder='Montante (M)'
                         style={styles.inputMontante}
                         keyboardType='numeric'
+                        value={this.state.inputMontante}
                         onChangeText={(text) => this.onChangeInput(text, 'montante')}
                         />
                     </View>

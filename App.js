@@ -6,10 +6,11 @@ import './src/config/StatusBarConfig';
 
 // Components
 import Main from './src/components/Main/Main';
-import JurosSimples from './src/components/Juros/JurosSimples/JurosSimples';
-import JurosCompostos from './src//components/Juros/JurosCompostos/JurosCompostos';
-import DescontoSimples from './src/components/Desconto/DescontoSimples/DescontoSimples';
-import DescontoComposto from './src/components/Desconto/DescontoComposto/DescontoComposto';
+import JurosSimples from './src/components/Main/Juros/JurosSimples/JurosSimples';
+import JurosCompostos from './src//components/Main/Juros/JurosCompostos/JurosCompostos';
+import DescontoSimples from './src/components/Main/Desconto/DescontoSimples/DescontoSimples';
+import DescontoComposto from './src/components/Main/Desconto/DescontoComposto/DescontoComposto';
+import Historico from './src/components/Main/Historico/Historico';
 
 class App extends Component {
 
@@ -28,7 +29,8 @@ const AppNavigator = createStackNavigator({
   JurosSimples,
   JurosCompostos,
   DescontoSimples,
-  DescontoComposto
+  DescontoComposto,
+  Historico
 },{
   initialRouteName: "Main",
 }
